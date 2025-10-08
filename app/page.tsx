@@ -8,12 +8,19 @@ import Footer from "@/app/components/Footer";
 export default function Home() {
   return (
     <div className="
-    bg-[url('/ui/FIRST-AGE-IG-blankpost.png')] bg-cover bg-center bg-no-repeat
-    font-sans grid grid-rows-[30px_1fr_100px] justify-items-center min-h-screen
+    bg-[url('/ui/FIRST-AGE-IG-blankpost.png')] 
+    bg-cover bg-center bg-no-repeat
+    font-sans 
+
+    grid grid-rows-[30px_1fr_100px] justify-items-center min-h-screen
     ">
-      <div className="bg-slate-800 w-full flex flex-row row-start-1 items-start justify-items-center p-1">
+
+      <div className="
+      bg-emerald-900 w-full flex flex-row row-start-1 items-start justify-items-center p-1">
           <Image src="/ui/FTC-SCOUT-white.svg" alt="FTC | SCOUTING APP" width={150} height={25} />
       </div>
+
+
       <main className="flex flex-row row-start-2 w-full">
         
         <div className="hidden sm:flex flex-col w-[50%] bg-slate-600 items-center justify-items-center">
