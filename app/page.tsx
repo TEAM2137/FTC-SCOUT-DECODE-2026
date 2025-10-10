@@ -16,8 +16,13 @@ export default function Home() {
     ">
 
       <div className="
-      bg-emerald-900 w-full flex flex-row row-start-1 items-start justify-items-center p-1">
+      bg-slate-900 
+      w-full 
+      flex flex-row 
+      row-start-1 items-start justify-items-center p-1">
+
           <Image src="/ui/FTC-SCOUT-white.svg" alt="FTC | SCOUTING APP" width={150} height={25} />
+      
       </div>
 
 
