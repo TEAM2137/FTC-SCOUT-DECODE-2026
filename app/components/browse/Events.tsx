@@ -27,18 +27,26 @@ interface EventItem
         ],
     }
 
+    interface EventWeeks {
+        weekStart: string,
+        events : EventItem[],
+
+    }
+
     const slectedSyle = 'bg-slate-900  hover:bg-blue-700 text-white text-sm font-normal py-1 px-2 rounded-full';
     const unselectedStyle = 'bg-slate-600  hover:bg-blue-700 text-white text-sm font-normal py-1 px-2 rounded-full';
 
 
 const Events = () => {
     const [events, setEvents] = useState<EventItem[]>([]);
-    const [displayEvents, setDisplayEvents] = useState<EventItem[]>([]);
+    const [displayEvents, setDisplayEvents] = useState<EventWeeks[]>([]);
     const [viewScrims, setViewScrims] = useState<boolean>(false);
     const [viewLeagues, setViewLeagues] = useState<boolean>(false);
     const [viewQuals, setViewQuals] = useState<boolean>(true);
     const [viewChamps, setViewChamps] = useState<boolean>(false);
     const [viewEvents, setViewEvents] = useState<string[]>(['Qualifier', 'Championship']);
+    const [viewFuture, setViewFuture] = useState<boolean>(true);
+    const [viewPast, setViewPast] = useState<boolean>(false);
     const [reload, setReload] = useState<boolean>(false);
 
     useEffect(() => {
@@ -62,6 +70,10 @@ const Events = () => {
         setReload(true);
     }, [viewScrims, viewLeagues, viewQuals, viewChamps]);
 
+    useEffect(() => {
+        setReload(true);
+    }, [viewFuture, viewPast]);
+
     function returnDate(date: string) {
         const dateObj = new Date(date);
         const month = dateObj.getMonth() + 1;
@@ -74,16 +86,66 @@ const Events = () => {
     useEffect(() => {        
         if (reload) {
             setReload(false);
-            const displayEvents: EventItem[] = [];
+            const includeEvents: EventItem[] = [];
+
+            const today = new Date();
+            const weekDate = today;
+            let dayOfWeek = today.getDay();
+            if (dayOfWeek == 0) {
+                dayOfWeek = 7
+            }
+            const seconds = (dayOfWeek - 1)* 86400
+            weekDate.setSeconds(weekDate.getSeconds() - seconds);
+            const weekString = weekDate.getFullYear().toString().padStart(4, '0') + "-" + (weekDate.getMonth() + 1).toString().padStart(2, '0') + "-" + weekDate.getDate().toString().padStart(2, '0') + "T00:00:00"
+
+            const currentWeekSeconds = new Date(weekString).getSeconds();
+
             for (let i = 0; i < events.length; i++ ) {
                 const event = events[i];
+                const eventWeekSeconds = new Date(event.weekStart).getSeconds();
+                let includeByType = false;
+                let includebyDate = false;
+
+
                 if (viewEvents.includes(event.typeName)) {
-                    displayEvents.push(event);
+                    includeByType= true;
                 } else if (viewEvents.length === 0) {
-                    displayEvents.push(event);
+                    includeByType = true;
+                } else {
+                    includeByType = false;
+                }
+
+                if (viewFuture && eventWeekSeconds >= currentWeekSeconds) {
+                    includebyDate = true;
+                }
+                if (viewPast && eventWeekSeconds < currentWeekSeconds) {
+                    includebyDate = true;
+                }
+
+
+                if (includeByType && includebyDate) {
+                    includeEvents.push(event);
                 }
             }
-            //console.log("Display Events:", displayEvents);
+
+            const displayEvents: EventWeeks[] = [];
+            let currentStartWeek: string = 'none';
+            let weekEvents: EventItem[] = [];
+
+            for (let i = 0; i < includeEvents.length; i++ ) {
+                const event = includeEvents[i];
+                const weekStart = event.weekStart;
+                
+                if (weekStart !== currentStartWeek) {
+                    if (currentStartWeek !== 'none') {
+                    displayEvents.push({weekStart: currentStartWeek, events: weekEvents});
+                    weekEvents = [];
+                    }
+                } 
+                currentStartWeek = weekStart;
+                weekEvents.push(event);
+                
+            }
             setDisplayEvents(displayEvents);
         }
     }, [reload, viewEvents, events]);
@@ -98,26 +160,21 @@ const Events = () => {
             <button className={viewQuals ? slectedSyle : unselectedStyle} onClick={() => setViewQuals(!viewQuals)}>Qualifiers</button>
             <button className={viewChamps ? slectedSyle : unselectedStyle} onClick={() => setViewChamps(!viewChamps)}>Championships</button>
         </div>
+        <div className="flex flex-row gap-1">
+            <button className={viewFuture ? slectedSyle : unselectedStyle} onClick={() => setViewFuture(!viewFuture)}>Future Events</button>
+            <button className={viewPast ? slectedSyle : unselectedStyle} onClick={() => setViewPast(!viewPast)}>Past Events</button>
+        </div>
         {displayEvents.length === 0 ? (
             <p>No Events to display, try adjusting your filters.</p>
         ) : (
-            <table className="text-sm font-normal">
-                <tbody>
-                {displayEvents.map((event, index: number) => (
-                    <tr key={index}>
-                        
-                        <td className="pr-1">{event.regionCode}</td>
-                        <td className="pr-1">{event.name}</td>
+           
+            displayEvents.map((eventWeek, index: number) => (
+                <div key={index}>
+                    <h2 className="text-2xl font-black">{eventWeek.weekStart}</h2>
 
-                        <td className="pr-1">{event.country}</td>
-                        <td className="pr-1">{returnDate(event.weekStart)}</td>
-                        <td className="pr-1">{returnDate(event.dateStart)}</td>
-                        <td className="pr-1">{event.teamsList.length}</td>
-
-                    </tr>
-                ))}
-                </tbody>
-            </table>
+                </div>
+            ))
+            
         )}
 
 
