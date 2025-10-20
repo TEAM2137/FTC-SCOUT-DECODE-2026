@@ -1,6 +1,6 @@
 
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect} from "react";
 
 interface EventItem 
     {
@@ -33,8 +33,27 @@ interface EventItem
 
     }
 
-    const slectedSyle = 'bg-slate-900  hover:bg-blue-700 text-white text-sm font-normal py-1 px-2 rounded-full';
-    const unselectedStyle = 'bg-slate-600  hover:bg-blue-700 text-white text-sm font-normal py-1 px-2 rounded-full';
+    const slectedSyle = 'bg-slate-900  hover:bg-blue-700 text-white text-xs font-normal py-1 px-2 rounded-full';
+    const unselectedStyle = 'bg-slate-600  hover:bg-blue-700 text-white text-xs font-normal py-1 px-2 rounded-full';
+
+    function returnDate(date: string) {
+        const dateObj = new Date(date);
+        const month = dateObj.getMonth() + 1;
+        const day = dateObj.getDate();
+        const year = dateObj.getFullYear();
+        return month + "/" + day+ "/" + year;
+    }
+
+    function returnDateComp(date: string) {
+        const dateObj = new Date(date);
+        const month = dateObj.getMonth() + 1;
+        const day = dateObj.getDate();
+        const year = dateObj.getFullYear();
+        const datecomp = year * 10000 + month * 100 + day;
+        return datecomp;
+    }
+
+
 
 
 const Events = () => {
@@ -47,6 +66,9 @@ const Events = () => {
     const [viewEvents, setViewEvents] = useState<string[]>(['Qualifier', 'Championship']);
     const [viewFuture, setViewFuture] = useState<boolean>(true);
     const [viewPast, setViewPast] = useState<boolean>(false);
+    const [region, setRegion] = useState<string>('');
+    const [regionList, setRegionList] = useState<string[]>([]);
+    const [showFilters, setShowFilters] = useState<boolean>(false);
     const [reload, setReload] = useState<boolean>(false);
 
     useEffect(() => {
@@ -74,19 +96,12 @@ const Events = () => {
         setReload(true);
     }, [viewFuture, viewPast]);
 
-    function returnDate(date: string) {
-        const dateObj = new Date(date);
-        const month = dateObj.getMonth() + 1;
-        const day = dateObj.getDate();
-        const year = dateObj.getFullYear();
-        return month + "/" + day+ "/" + year;
-    }
-
 
     useEffect(() => {        
         if (reload) {
             setReload(false);
             const includeEvents: EventItem[] = [];
+            const regions: string[] = []
 
             const today = new Date();
             const weekDate = today;
@@ -97,36 +112,52 @@ const Events = () => {
             const seconds = (dayOfWeek - 1)* 86400
             weekDate.setSeconds(weekDate.getSeconds() - seconds);
             const weekString = weekDate.getFullYear().toString().padStart(4, '0') + "-" + (weekDate.getMonth() + 1).toString().padStart(2, '0') + "-" + weekDate.getDate().toString().padStart(2, '0') + "T00:00:00"
-
-            const currentWeekSeconds = new Date(weekString).getSeconds();
+            const currentdatecomp = returnDateComp(weekString);
+            
 
             for (let i = 0; i < events.length; i++ ) {
                 const event = events[i];
-                const eventWeekSeconds = new Date(event.weekStart).getSeconds();
-                let includeByType = false;
-                let includebyDate = false;
+                const eventdatecomp = returnDateComp(event.weekStart)
+
+                let includeByType = false
+                let includebyDate = false
+                let includeByRegion = false
+
 
 
                 if (viewEvents.includes(event.typeName)) {
-                    includeByType= true;
-                } else if (viewEvents.length === 0) {
                     includeByType = true;
-                } else {
-                    includeByType = false;
+                } 
+
+                if (eventdatecomp >= currentdatecomp && viewFuture) {
+                    includebyDate = true;
+                }
+                if (eventdatecomp < currentdatecomp && viewPast) {
+                    includebyDate = true;
                 }
 
-                if (viewFuture && eventWeekSeconds >= currentWeekSeconds) {
-                    includebyDate = true;
-                }
-                if (viewPast && eventWeekSeconds < currentWeekSeconds) {
-                    includebyDate = true;
+                if (region === '') {
+                    includeByRegion = true
+                } else if (event.regionCode === region) {
+                    includeByRegion = true
+                } else {
+                    includeByRegion = false
                 }
 
 
                 if (includeByType && includebyDate) {
+                    if (!regions.includes(event.regionCode)) {
+                        regions.push(event.regionCode)
+                    }
+                }
+
+
+                if (includeByType && includebyDate && includeByRegion) {
                     includeEvents.push(event);
                 }
             }
+
+            setRegionList(regions);
 
             const displayEvents: EventWeeks[] = [];
             let currentStartWeek: string = 'none';
@@ -150,33 +181,67 @@ const Events = () => {
         }
     }, [reload, viewEvents, events]);
 
+    function setUnsetRegion(newregion: string) {
+        if (region === newregion) {
+            setRegion('');
+        } else {
+            setRegion(newregion);
+        }
+        setReload(true);
+    }
+
   return (
     <div className="text-slate-950 p-4 mx-auto min-w-[98%]">
-        <h1 className="text-2xl font-black">FTC Events</h1>
-        <h2>Select View ({viewEvents.join(', ')})</h2>
-        <div className="flex flex-row gap-1">
-            <button className={viewScrims ? slectedSyle : unselectedStyle} onClick={() => setViewScrims(!viewScrims)}>Scrimmages</button>
-            <button className={viewLeagues ? slectedSyle : unselectedStyle} onClick={() => setViewLeagues(!viewLeagues)}>League Meets</button>
-            <button className={viewQuals ? slectedSyle : unselectedStyle} onClick={() => setViewQuals(!viewQuals)}>Qualifiers</button>
-            <button className={viewChamps ? slectedSyle : unselectedStyle} onClick={() => setViewChamps(!viewChamps)}>Championships</button>
+        <div className="flex flex-row flex-wrap gap-1 border-b-2 w-[100%] border-slate-400 pb-2 mb-2">
+            <div className="flex"><h1 className="text-2xl font-black">FTC Events</h1></div>
+            <div className="flex place-self-end"><button className={showFilters ? slectedSyle : unselectedStyle} onClick={() => setShowFilters(!showFilters)}>Filters</button></div>
         </div>
-        <div className="flex flex-row gap-1">
-            <button className={viewFuture ? slectedSyle : unselectedStyle} onClick={() => setViewFuture(!viewFuture)}>Future Events</button>
-            <button className={viewPast ? slectedSyle : unselectedStyle} onClick={() => setViewPast(!viewPast)}>Past Events</button>
+        {showFilters && ( <>
+        <div className="flex flex-col gap-1 flex-wrap">
+            <div className="flex flex-row flex-wrap gap-1 border-b-2 border-slate-400 pb-2 mb-2">
+                <h3>Event Types: </h3>
+                <button className={viewScrims ? slectedSyle : unselectedStyle} onClick={() => setViewScrims(!viewScrims)}>Scrimmages</button>
+                <button className={viewLeagues ? slectedSyle : unselectedStyle} onClick={() => setViewLeagues(!viewLeagues)}>League Meets</button>
+                <button className={viewQuals ? slectedSyle : unselectedStyle} onClick={() => setViewQuals(!viewQuals)}>Qualifiers</button>
+                <button className={viewChamps ? slectedSyle : unselectedStyle} onClick={() => setViewChamps(!viewChamps)}>Championships</button>
+            </div>
+            <div className="flex flex-row flex-wrap gap-1 border-b-2 border-slate-400 pb-2 mb-2">
+                <h3>By When: </h3>
+                <button className={viewFuture ? slectedSyle : unselectedStyle} onClick={() => setViewFuture(!viewFuture)}>Future Events</button>
+                <button className={viewPast ? slectedSyle : unselectedStyle} onClick={() => setViewPast(!viewPast)}>Past Events</button>
+            </div>
+            <div className="flex flex-row flex-wrap gap-1 border-b-2 border-slate-400 pb-2 mb-2">
+                <h3 className="w-[100%]">By Region: </h3>
+                {regionList.map((regionItem, index: number) => (
+                    <button key={index} className={region === regionItem ? slectedSyle : unselectedStyle} onClick={() => setUnsetRegion(regionItem)}>{regionItem}</button>
+                ))}
+             </div>
         </div>
+        </> )}
+
+
+        <div className="flex flex-row gap-1 flex-wrap">
         {displayEvents.length === 0 ? (
             <p>No Events to display, try adjusting your filters.</p>
         ) : (
            
             displayEvents.map((eventWeek, index: number) => (
-                <div key={index}>
-                    <h2 className="text-2xl font-black">{eventWeek.weekStart}</h2>
-
+                <div key={index} className="flex flex-col min-w-[96%] max-w-[96%] sm:min-w-[46%] sm:max-w-[46%] lg:min-w-[32%] lg:max-w-[32%] p-1">
+                    <div key={index} className="flex flex-col bg-slate-600 rounded-lg p-1">
+                    <h2 className="text-sm font-bold text-white">WEEK OF {returnDate(eventWeek.weekStart)}</h2>
+                    {eventWeek.events.map((event, index: number) => (
+                        <div key={index} className="flex flex-row gap-2 p-2 w-[100%] bg-slate-100 mb-1">
+                            <div className="min-w-[15%]"><div className="text-xs font-normal bg-slate-900 rounded-lg p-1 text-white text-center">{event.regionCode}</div></div>
+                            <div className="text-sm font-bold">{event.name}</div>
+                            <div className="text-sm font-normal">{event.teamsCount} Teams</div>
+                        </div>
+                    ))} 
+                    </div>
                 </div>
             ))
             
         )}
-
+        </div>
 
     </div>
   )

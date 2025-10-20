@@ -31,6 +31,7 @@ interface EventItem
 
 const Events = () => {
     const [events, setEvents] = useState<EventItem[]>([]);
+    
 
     useEffect(() => {
         fetch('/api/decode/events')
