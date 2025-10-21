@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
 <div className="
-    bg-[url('/ui/FIRST-AGE-IG-blankpost.png')] bg-cover bg-center bg-no-repeat
+    bg-slate-200
     font-sans grid grid-rows-[30px_1fr_100px] justify-items-center min-h-screen
     ">
       <div className="bg-slate-800 w-full flex flex-row row-start-1 items-start justify-items-center p-1">

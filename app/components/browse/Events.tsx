@@ -1,5 +1,5 @@
-
-
+'use client';
+import Link from "next/link";
 import { useState, useEffect} from "react";
 
 interface EventItem 
@@ -191,10 +191,10 @@ const Events = () => {
     }
 
   return (
-    <div className="text-slate-950 p-4 mx-auto min-w-[98%]">
+    <div className="text-slate-950 p-4 mx-auto min-w-[98%] bg-slate-200">
         <div className="flex flex-row flex-wrap gap-1 border-b-2 w-[100%] border-slate-400 pb-2 mb-2">
             <div className="flex"><h1 className="text-2xl font-black">FTC Events</h1></div>
-            <div className="flex place-self-end"><button className={showFilters ? slectedSyle : unselectedStyle} onClick={() => setShowFilters(!showFilters)}>Filters</button></div>
+            <div className="flex place-self-end ml-auto"><button className={showFilters ? slectedSyle : unselectedStyle} onClick={() => setShowFilters(!showFilters)}>Filters</button></div>
         </div>
         {showFilters && ( <>
         <div className="flex flex-col gap-1 flex-wrap">
@@ -221,19 +221,26 @@ const Events = () => {
 
 
         <div className="flex flex-row gap-1 flex-wrap">
-        {displayEvents.length === 0 ? (
-            <p>No Events to display, try adjusting your filters.</p>
+        {displayEvents.length === 0 ? (<p>
+            {events.length === 0 ? (<>
+                Loading events...</>
+            ) : (<>
+                No Events to display, try adjusting your filters.</>
+            )}
+            </p>
         ) : (
            
             displayEvents.map((eventWeek, index: number) => (
-                <div key={index} className="flex flex-col min-w-[96%] max-w-[96%] sm:min-w-[46%] sm:max-w-[46%] lg:min-w-[32%] lg:max-w-[32%] p-1">
-                    <div key={index} className="flex flex-col bg-slate-600 rounded-lg p-1">
-                    <h2 className="text-sm font-bold text-white">WEEK OF {returnDate(eventWeek.weekStart)}</h2>
+                <div key={index} className="flex flex-col w-[100%] sm:w-[48%] lg:w-[33%] xl:w-[24%] p-1">
+                    <div key={index} className="flex flex-col bg-slate-600 rounded-lg p-1 shadow-lg">
+                    <h2 className="text-sm font-bold text-slate-200 pl-2">WEEK OF {returnDate(eventWeek.weekStart)}</h2>
                     {eventWeek.events.map((event, index: number) => (
-                        <div key={index} className="flex flex-row gap-2 p-2 w-[100%] bg-slate-100 mb-1">
-                            <div className="min-w-[15%]"><div className="text-xs font-normal bg-slate-900 rounded-lg p-1 text-white text-center">{event.regionCode}</div></div>
-                            <div className="text-sm font-bold">{event.name}</div>
-                            <div className="text-sm font-normal">{event.teamsCount} Teams</div>
+                        <div key={index} className="flex flex-row gap-2 p-2 w-[100%] bg-slate-100 mb-1 rounded-md">
+                            <div className="min-w-[12%]"><div className="text-xs font-light bg-slate-900 rounded-lg p-0.5 text-white text-center">{event.regionCode}</div></div>
+                            <div className="text-sm font-bold">
+                                <Link href={`/decode/${event.code}`}>{event.name}</Link>
+                                </div>
+                            <div className="text-xs font-normal">{event.teamsCount} Teams</div>
                         </div>
                     ))} 
                     </div>
