@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
 <div className="
-    bg-slate-200
+    bg-slate-100
     font-sans grid grid-rows-[30px_1fr_100px] justify-items-center min-h-screen
     ">
       <div className="bg-slate-800 w-full flex flex-row row-start-1 items-start justify-items-center p-1">

@@ -51,29 +51,31 @@ export default function Page({ params, }: { params: Promise<{ eventid: string }>
 
 
 
-  return (
-    <div className='text-black p-2'>
+  return (<>
+{event.code === 'loading' ? (
+            <p>Loading teams...</p>
+) : (
+    <div className='text-black p-2 w-[100%]'>
         <h1 className="text-2xl font-black">{event.name}</h1>
         <p className="text-sm font-normal">{event.typeName} | {event.city}, {event.stateprov}, {event.country} | 
             {returnDate(event.dateStart)} to {returnDate(event.dateEnd)}</p>
-        <p className="text-sm font-normal">{event.teamsList.length} Teams Participating</p>
-        <div className="flex flex-row gap-1 flex-wrap">
-            {event.teamsList.map((team, index: number) => (
-                <div key={index} className="flex flex-col w-[100%] sm:w-[48%] lg:w-[33%] xl:w-[24%] p-1">
-
-                    <div className="flex flex-col bg-slate-600 rounded-lg p-1 shadow-lg">
-                        <h2 className="text-sm font-bold text-slate-200 pl-2">TEAM {team.teamNumber}</h2>
-                        <div className="flex flex-row gap-2 p-2 w-[100%] bg-slate-100 mb-1 rounded-md">
-                            <div className="min-w-[12%]"><div className="text-xs font-light bg-slate-900 rounded-lg p-0.5 text-white text-center">{team.teamNumber}</div></div>
-                            <div className="text-sm font-bold">{team.nameShort}</div>
-                            <div className="text-xs font-normal">{team.schoolName}</div>
-                        </div>
-                    </div>
-                </div>
-            ))}
-        </div>
         
+        <div className="flex flex-row flex-wrap gap-1 w-[100%] bg-slate-800 mt-4 rounded-md">
+            <h2 className="text-sm font-bold text-white ml-2 text-left w-[100%]">{event.teamsList.length} Teams Participating</h2>
+
+            <div className="flex flex-row flex-wrap gap-1 w-[100%] p-1 items-center justify-center">
+
+                {event.teamsList.map((team, index: number) => (
+                    <div key={index} className="flex flex-row gap-2 p-2 bg-slate-100 mb-1 w-[49%] sm:w-[32%] lg:w-[25%] xl:w-[16%] rounded-md">
+                        <div className="text-xs font-light bg-slate-900 rounded-lg p-0.5 text-white text-center">{team.teamNumber}</div>
+                        <div className="text-xs font-bold">{team.nameShort}</div>
+                    </div>
+                ))}
+
+            </div>
+        </div>
     </div>
-  )
+)}
+</>)
 }
 
