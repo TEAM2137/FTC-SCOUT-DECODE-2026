@@ -2,7 +2,7 @@
 
 import connectDB from "@/lib/db"
 import Team from "@/models/ftc-api/Team"
-import Region from "@/models/filters/Regions"
+//import Region from "@/models/filters/Regions"
 
 export async function GET() {
   // Set API Path to FRC Events API

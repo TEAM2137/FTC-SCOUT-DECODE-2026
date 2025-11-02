@@ -3,7 +3,7 @@
 import connectDB from "@/lib/db"
 import Event from "@/models/ftc-api/Event"
 
-export async function GET( request: Request ) {
+export async function GET() {
 
     await connectDB();
     const data = await Event.find().sort({ weekStart: 1 });

@@ -179,7 +179,7 @@ const Events = () => {
             }
             setDisplayEvents(displayEvents);
         }
-    }, [reload, viewEvents, events]);
+    }, [reload, viewEvents, events, region, viewFuture, viewPast]);
 
     function setUnsetRegion(newregion: string) {
         if (region === newregion) {

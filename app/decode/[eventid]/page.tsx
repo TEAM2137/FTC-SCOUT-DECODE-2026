@@ -27,37 +27,6 @@ interface EventItem
         ],
     }
 
-    interface qualMatch
-        {
-            description: string,
-            tournamentLevel: string,
-            series: number,
-            matchNUmber: number,
-            startTime: string,
-            actualStartTime: string,
-            postResultTime: string,
-            scoreRedFinal: number,
-            scoreRedFoul: number,
-            scoreRedAuto: number,
-            scoreBlueFinal: number,
-            scoreBlueFoul: number,
-            scoreBlueAuto: number,
-            redwins: boolean,
-            bluewins: boolean,
-            teams: [
-                {
-                    teamNumber: number,
-                    displayTeamNUmber: string,
-                    station: string,
-                    surrogate: boolean,
-                    noShow: boolean,
-                    dq: boolean,
-                    onField: boolean,
-                    teamName: string,
-                },
-            ]
-        }
-
 
     function returnDate(date: string) {
         const dateObj = new Date(date);
@@ -71,7 +40,6 @@ interface EventItem
 export default function Page({ params, }: { params: Promise<{ eventid: string }>}){
     const { eventid } = use(params)
     const [event, setEvent] = useState<EventItem>({code: 'loading', regionCode: '', name: '', typeName: '', city: '', stateprov: '', country: '', weekStart: '', dateStart: '', dateEnd: '', teamsCount: 0, teamsList: [{teamNumber: 0, nameShort: '', schoolName: '', city: '', stateProv: '', country: ''},]});
-    const [qualMatches, setQualMatches] = useState<[qualMatch]>([{description: 'loading', tournamentLevel: '', series: 0, matchNUmber: 0, startTime: '', actualStartTime: '', postResultTime: '', scoreRedFinal: 0, scoreRedFoul: 0, scoreRedAuto: 0, scoreBlueFinal: 0, scoreBlueFoul: 0, scoreBlueAuto: 0, redwins: false, bluewins: false, teams: [{teamNumber: 0, displayTeamNUmber: '', station: '', surrogate: false, noShow: false, dq: false, onField: false, teamName: ''},]}]);
 
 
     useEffect(() => {
@@ -81,16 +49,8 @@ export default function Page({ params, }: { params: Promise<{ eventid: string }>
             setEvent(data);
         })
         .catch(err => console.log(err));
-    }, []);
+    }, [eventid]);
 
-    useEffect(() => {
-        fetch(`/api/ftc-events/events/${eventid}/quals`)
-        .then(res => res.json())
-        .then(data => {
-            setQualMatches(data);
-        })
-        .catch(err => console.log(err));
-    }, []);
 
 
   return (<>

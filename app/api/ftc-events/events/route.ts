@@ -97,7 +97,7 @@ export async function GET() {
             }
 
         const updateEvent = await Event.findOneAndUpdate({ code: newEvent.code }, newEvent, { upsert: true, new: true });
-        //console.log(updateEvent)
+        console.log(updateEvent)
     } catch (err) {
         console.log(err)
     }

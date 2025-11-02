@@ -1,7 +1,7 @@
 'use server'
 
-import connectDB from "@/lib/db"
-import Schedule from "@/models/ftc-api/Schedule"
+//import connectDB from "@/lib/db"
+//import Schedule from "@/models/ftc-api/Schedule"
 
 export async function GET( request: Request, { params }: { params: Promise<{ eventid: string, }> } ) {
     const event_key = (await params).eventid
