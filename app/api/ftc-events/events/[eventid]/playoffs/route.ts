@@ -1,5 +1,9 @@
 'use server'
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-static';
+export const revalidate = 120;
+
 //import connectDB from "@/lib/db"
 //import Schedule from "@/models/ftc-api/Schedule"
 
