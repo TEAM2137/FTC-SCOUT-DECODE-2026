@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from 'next/link';
 
 import Footer from "@/app/components/Footer";
 
@@ -20,7 +21,9 @@ export default function RootLayout({
     font-sans grid grid-rows-[30px_1fr_100px] justify-items-center min-h-screen
     ">
       <div className="bg-slate-800 w-full flex flex-row row-start-1 items-start justify-items-center p-1">
+          <Link href="/">
           <Image src="/ui/FTC-SCOUT-white.svg" alt="FTC | SCOUTING APP" width={150} height={25} />
+          </Link>
       </div>
       <main className="flex flex-row row-start-2 w-full">
         {children}

@@ -1,5 +1,5 @@
 'use client'
-import Link from 'next/link'
+
 import { use, useEffect, useState } from 'react'
 
 interface EventItem 
@@ -32,7 +32,7 @@ interface EventItem
             description: string,
             tournamentLevel: string,
             series: number,
-            matchNUmber: number,
+            matchNumber: number,
             startTime: string,
             actualStartTime: string,
             postResultTime: string,
@@ -42,12 +42,12 @@ interface EventItem
             scoreBlueFinal: number,
             scoreBlueFoul: number,
             scoreBlueAuto: number,
-            redwins: boolean,
-            bluewins: boolean,
+            redWins: boolean,
+            blueWins: boolean,
             teams: [
                 {
                     teamNumber: number,
-                    displayTeamNUmber: string,
+                    displayTeamNumber: string,
                     station: string,
                     surrogate: boolean,
                     noShow: boolean,
@@ -101,54 +101,64 @@ export default function Page({ params, }: { params: Promise<{ eventid: string }>
         <h1 className="text-2xl font-black">{event.name}</h1>
         <p className="text-sm font-normal">{event.typeName} | {event.city}, {event.stateprov}, {event.country} | {returnDate(event.dateStart)} to {returnDate(event.dateEnd)}</p>
 
-        <div className="bg-slate-600 w-[100%] rounded-md border-2 border-slate-600 mb-2">
-            <h1 className="p-2 font-bold text-xl text-white">Event Results <span className="text-sm">(from FTC-EVENTS API)</span></h1>
-            <div className="bg-white p-1 flex flex-row flex-wrap rounded-b-md">
-                
-                    <div  className="flex flex-row mb-1 mr-1 w-[99%] sm:w-[49%] place-items-center">
-                        <Link href={`/decode/${event.code}/rankings`} className="w-[100%]">
-                        <button className="w-[100%] bg-blue-800 hover:bg-blue-700 active:bg-blue-900 py-2 rounded-md text-white font-semibold">Rankings</button>
-                        </Link>
 
-                    </div>
-                    <div  className="flex flex-row mb-1 mr-1 w-[99%] sm:w-[49%] place-items-center">
-                        <Link href={`/decode/${event.code}/quals`} className="w-[100%]">
-                        <button className="w-[100%] bg-blue-800 hover:bg-blue-700 active:bg-blue-900 py-2 rounded-md text-white font-semibold">Qualification Matches</button>
-                        </Link>
-                    </div>
-                    <div  className="flex flex-row gap-2 bg-slate-100 mb-1 mr-1 w-[99%] sm:w-[49%] lg:w-[32%] rounded-md justify-items-center place-items-center">
-                        <Link href={`/decode/${event.code}/playoffs`} className="w-[100%]">
-                        <button className="w-[100%] bg-blue-800 hover:bg-blue-700 active:bg-blue-900 py-2 rounded-md text-white font-semibold">Playoff Matches</button>
-                        </Link>
-                    </div>
-                    <div  className="flex flex-row mb-1 mr-1 w-[99%] sm:w-[49%] place-items-center">
-                        <Link href={`/decode/${event.code}/awards`} className="w-[100%]">
-                        <button className="w-[100%] bg-blue-800 hover:bg-blue-700 active:bg-blue-900 py-2 rounded-md text-white font-semibold">Awards</button>
-                        </Link>
-                    </div>
+            <h1 className="p-2 font-bold text-xl text-black">Matches <span className="text-sm">(from FTC-EVENTS API)</span></h1>
+ 
 
+        {qualMatches.map((match, index: number) => (
+            <div key={index} className="grid grid-cols-4 grid-rows-4 p-0 bg-slate-100 border-2 border-slate-500 mb-2 mr-1 w-[100%] rounded-md justify-items-center place-items-center">
+                <div className="row-start-1 col-start-1 col-span-4 p-1 text-sm font-semibold bg-slate-500 text-white w-full h-full ">{match.description}</div>
+                <div className="row-start-2 col-start-1 col-span-1 p-1 text-xs font-bold w-full h-full text-right items-center">
+                    {match.teams.map((team, tindex: number) => (
+                        team.station === 'Red1' ? (
+                            <div key={index+'-'+tindex}><span className="text-red-900 text-sm font-bold">{team.displayTeamNumber}</span></div>
+                        ) 
+                        : null
+                    ))}
+                </div>
+                <div className="row-start-3 col-start-1 col-span-1 p-1 text-xs font-bold w-full h-full text-right items-center">
+                    {match.teams.map((team, tindex: number) => (
+                        team.station === 'Red2' ? (
+                            <div key={index+'-'+tindex}><span className="text-red-900 text-sm font-bold">{team.displayTeamNumber}</span></div>
+                        ) 
+                        : null
+                    ))}
+                </div>
+                <div className="row-start-2 row-span-2 col-start-2 col-span-1 text-2xl font-bold bg-red-300 text-center w-full h-full justify-items-center place-items-center">
+                    <h1 className={match.redWins ? 'text-3xl' : 'text-2xl'}>{match.scoreRedFinal}</h1>
+                    {match.redWins ? <h1 className="text-red-900 text-sm font-bold">WINNER</h1> : null}
+                </div>
+                <div className="row-start-2 row-span-2 col-start-3 col-span-1 text-2xl font-bold bg-blue-300 text-center w-full h-full  justify-items-center place-items-center">
+                    <h1 className={match.blueWins ? 'text-3xl' : 'text-2xl'}>{match.scoreBlueFinal}</h1>
+                    {match.blueWins ? <h1 className="text-blue-900 text-sm font-bold">WINNER</h1> : null}
+                </div>
+                <div className="row-start-2 col-start-4 col-span-1 p-1 text-xs font-bold w-full h-full text-left items-center">
+                    {match.teams.map((team, tindex: number) => (
+                        team.station === 'Blue1' ? (
+                            <div key={index+'-'+tindex}><span className="text-blue-900 text-sm font-bold">{team.displayTeamNumber}</span></div>
+                        ) 
+                        : null
+                    ))}
+                </div>
+                <div className="row-start-3 col-start-4 col-span-1 p-1 text-xs font-bold w-full h-full text-left items-center">
+                    {match.teams.map((team, tindex: number) => (
+                        team.station === 'Blue2' ? (
+                            <div key={index+'-'+tindex}><h1 className="text-blue-900 text-sm font-bold">{team.displayTeamNumber}</h1></div>
+                        ) 
+                        : null
+                    ))}
+                </div>
+                <div className="row-start-4 col-start-1 col-span-2 p-1 pr-2 text-xs font-normal bg-slate-500 text-white w-full h-full text-right">AUTO: {match.scoreRedAuto} FOUL: {match.scoreRedFoul}</div>
+                <div className="row-start-4 col-start-3 col-span-2 p-1 pl-2 text-xs font-normal bg-slate-500 text-white w-full h-full text-left">AUTO: {match.scoreBlueAuto} FOUL: {match.scoreBlueFoul}</div>
             </div>
-        </div>
+        ))}
 
-        <div className="bg-slate-600 w-[100%] rounded-md border-2 border-slate-600 mb-2">
-            <h1 className="p-2 font-bold text-xl text-white">SCOUTING TOOLS <span className="text-sm">(Log-in Required)</span></h1>
-            <div className="bg-white p-1 flex flex-row flex-wrap rounded-b-md">
-                
-                    <div  className="flex flex-row gap-2 p-2 bg-slate-100 mb-1 mr-1 w-[99%] sm:w-[49%] lg:w-[32%] rounded-md justify-items-center place-items-center">
-                        <button className="">Scout Matches</button>
-                    </div>
-                    <div  className="flex flex-row gap-2 p-2 bg-slate-100 mb-1 mr-1 w-[99%] sm:w-[49%] lg:w-[32%] rounded-md justify-items-center place-items-center">
-                        <button className="">Insights</button>
-                    </div>
-                    <div  className="flex flex-row gap-2 p-2 bg-slate-100 mb-1 mr-1 w-[99%] sm:w-[49%] lg:w-[32%] rounded-md justify-items-center place-items-center">
-                        <button className="">Alliance Selector</button>
-                    </div>
 
-            </div>
-        </div>
+
+
 
         <div className="bg-slate-600 w-[100%] rounded-md border-2 border-slate-600">
-            <h1 className="p-2 font-bold text-xl text-white">{event.teamsList.length} Teams Participating</h1>
+            <h1 className="p-2 font-bold text-xl text-white">{event.teamsList.length} Teams Participating <span className="text-sm">(from FTC-EVENTS API)</span></h1>
             <div className="bg-white p-1 flex flex-row flex-wrap rounded-b-md">
                 {event.teamsList.map((team, index: number) => (
                     <div key={index} className="flex flex-row gap-2 p-2 bg-slate-100 mb-1 mr-1 w-[99%] sm:w-[49%] lg:w-[32%] rounded-md justify-items-center place-items-center">
