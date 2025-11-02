@@ -94,8 +94,8 @@ export default function Page({ params, }: { params: Promise<{ eventid: string }>
 
 
   return (<>
-{event.code === 'loading' ? (
-            <p>Loading teams...</p>
+{qualMatches[0].description === 'loading' ? (
+            <p>Loading matches...</p>
 ) : (
     <div className='text-black p-2 w-[100%]'>
         <h1 className="text-2xl font-black">{event.name}</h1>
