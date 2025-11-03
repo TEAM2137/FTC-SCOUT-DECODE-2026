@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+
 import { use, useEffect, useState } from 'react'
 
 interface matchScore
@@ -68,14 +70,14 @@ const [doubleBase, setDoubleBase] = useState<string>('NONE');
                 
                 {!autoLeave ? (
                 <div className="row-start-1 col-start-2 col-span-1 place-items-center m-auto" >
-                  <div className="block place-items-start p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] " onClick={() => setAutoLeave(!autoLeave)}>
-                    <div className="block flex-col items-center justify-center w-[20px] h-[20px] bg-red-700 border-4 border-red-900 rounded-full">&nbsp;</div>
+                  <div className="flex place-items-start justify-start p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] " onClick={() => setAutoLeave(!autoLeave)}>
+                    <div className="flex flex-col items-center justify-center w-[20px] h-[20px] bg-red-700 border-4 border-red-900 rounded-full">&nbsp;</div>
                   </div>
                 </div>
                 ) : (
                 <div className="row-start-1 col-start-2 col-span-1 place-items-center m-auto" >
-                  <div className="block place-items-end p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] " onClick={() => setAutoLeave(!autoLeave)}>
-                    <div className="block flex-col items-center justify-center w-[20px] h-[20px] bg-green-800 border-4 border-green-400 rounded-full">&nbsp;</div>
+                  <div className="flex place-items-end justify-end p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] " onClick={() => setAutoLeave(!autoLeave)}>
+                    <div className="flex flex-col items-center justify-center w-[20px] h-[20px] bg-green-800 border-4 border-green-400 rounded-full">&nbsp;</div>
                   </div>
                 </div>  
                 )}
@@ -110,28 +112,28 @@ const [doubleBase, setDoubleBase] = useState<string>('NONE');
                 
                 {teleBase !== 'FULL' ? (
                 <div className="my-1 row-start-2 col-start-2 col-span-1 place-items-center m-auto" >
-                  <div className="block place-items-start p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] " onClick={() => setTeleBase('FULL')}>
-                    <div className="block flex-col items-center justify-center w-[20px] h-[20px] bg-red-700 border-4 border-red-900 rounded-full">&nbsp;</div>
+                  <div className="flex place-items-start justify-start p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] " onClick={() => setTeleBase('FULL')}>
+                    <div className="flex flex-col items-center justify-center w-[20px] h-[20px] bg-red-700 border-4 border-red-900 rounded-full">&nbsp;</div>
                   </div>
                 </div>
                 ) : (
                 <div className="my-1 row-start-2 col-start-2 col-span-1 place-items-center m-auto" >
-                  <div className="block place-items-end p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] " onClick={() => setTeleBase('NONE')}>
-                    <div className="block flex-col items-center justify-center w-[20px] h-[20px] bg-green-800 border-4 border-green-400 rounded-full">&nbsp;</div>
+                  <div className="flex place-items-end justify-end p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] " onClick={() => setTeleBase('NONE')}>
+                    <div className="flex flex-col items-center justify-center w-[20px] h-[20px] bg-green-800 border-4 border-green-400 rounded-full">&nbsp;</div>
                   </div>
                 </div>  
                 )}
 
                 {teleBase !== 'PARTIAL' ? (
                 <div className="my-1 row-start-3 col-start-2 col-span-1 place-items-center m-auto" >
-                  <div className="block place-items-start p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] h-[25px]" onClick={() => setTeleBase('PARTIAL')}>
-                    <div className="block flex-col items-center justify-center w-[20px] h-[20px] bg-red-700 border-4 border-red-900 rounded-full">&nbsp;</div>
+                  <div className="flex place-items-start justify-start p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] h-[25px]" onClick={() => setTeleBase('PARTIAL')}>
+                    <div className="flex flex-col items-center justify-center w-[20px] h-[20px] bg-red-700 border-4 border-red-900 rounded-full">&nbsp;</div>
                   </div>
                 </div>
                 ) : (
                 <div className="my-1 row-start-3 col-start-2 col-span-1 place-items-center m-auto" >
-                  <div className="block place-items-end p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] " onClick={() => setTeleBase('NONE')}>
-                    <div className="block flex-col items-center justify-center w-[20px] h-[20px] bg-green-800 border-4 border-green-400 rounded-full">&nbsp;</div>
+                  <div className="flex place-items-end justify-end p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] " onClick={() => setTeleBase('NONE')}>
+                    <div className="flex flex-col items-center justify-center w-[20px] h-[20px] bg-green-800 border-4 border-green-400 rounded-full">&nbsp;</div>
                   </div>
                 </div>  
                 )}
@@ -150,28 +152,28 @@ const [doubleBase, setDoubleBase] = useState<string>('NONE');
                 
                 {doubleBase !== 'RAISE' ? (
                 <div className="my-1 row-start-2 col-start-2 col-span-1 place-items-center m-auto" >
-                  <div className="block place-items-start p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] " onClick={() => setDoubleBase('RAISE')}>
-                    <div className="block flex-col items-center justify-center w-[20px] h-[20px] bg-red-700 border-4 border-red-900 rounded-full">&nbsp;</div>
+                  <div className="flex place-items-start justify-start p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] " onClick={() => setDoubleBase('RAISE')}>
+                    <div className="flex flex-col items-center justify-center w-[20px] h-[20px] bg-red-700 border-4 border-red-900 rounded-full">&nbsp;</div>
                   </div>
                 </div>
                 ) : (
                 <div className="my-1 row-start-2 col-start-2 col-span-1 place-items-center m-auto" >
-                  <div className="block place-items-end p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] " onClick={() => setDoubleBase('NONE')}>
-                    <div className="block flex-col items-center justify-center w-[20px] h-[20px] bg-green-800 border-4 border-green-400 rounded-full">&nbsp;</div>
+                  <div className="flex place-items-end justify-end p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] " onClick={() => setDoubleBase('NONE')}>
+                    <div className="flex flex-col items-center justify-center w-[20px] h-[20px] bg-green-800 border-4 border-green-400 rounded-full">&nbsp;</div>
                   </div>
                 </div>  
                 )}
 
                 {doubleBase !== 'LIFT' ? (
                 <div className="my-1 row-start-3 col-start-2 col-span-1 place-items-center m-auto" >
-                  <div className="block place-items-start p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] h-[25px]" onClick={() => setDoubleBase('LIFT')}>
-                    <div className="block flex-col items-center justify-center w-[20px] h-[20px] bg-red-700 border-4 border-red-900 rounded-full">&nbsp;</div>
+                  <div className="flex place-items-start justify-start p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] h-[25px]" onClick={() => setDoubleBase('LIFT')}>
+                    <div className="flex flex-col items-center justify-center w-[20px] h-[20px] bg-red-700 border-4 border-red-900 rounded-full">&nbsp;</div>
                   </div>
                 </div>
                 ) : (
                 <div className="my-1 row-start-3 col-start-2 col-span-1 place-items-center m-auto" >
-                  <div className="block place-items-end p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] " onClick={() => setDoubleBase('NONE')}>
-                    <div className="block flex-col items-center justify-center w-[20px] h-[20px] bg-green-800 border-4 border-green-400 rounded-full">&nbsp;</div>
+                  <div className="flex place-items-end justify-end p-0 rounded-full bg-gray-900 border-2 border-gray-500 w-[50px] " onClick={() => setDoubleBase('NONE')}>
+                    <div className="flex flex-col items-center justify-center w-[20px] h-[20px] bg-green-800 border-4 border-green-400 rounded-full">&nbsp;</div>
                   </div>
                 </div>  
                 )}
@@ -184,7 +186,9 @@ const [doubleBase, setDoubleBase] = useState<string>('NONE');
             <div className="grid grid-cols-2 grid-rows-1 justify-between p-1">
                 <div className="row-start-1 col-start-1 col-span-2 text-white font-medium text-center text-sm" >SUBMIT SCORES</div>
                 <div className="row-start-2 col-start-1 col-span-1 text-white font-medium text-center" ><button className="bg-blue-900 hover:bg-blue-700 active:bg-blue-700 focus:bg-blue-700 text-white font-black text-4xl py-3 px-4 rounded-xl w-[96%]" onClick={() => setTeleArtifacts(teleArtifacts + 1)}>SAVE</button></div>
-                <div className="row-start-2 col-start-2 col-span-1 text-white font-medium text-center" ><button className="bg-red-900 hover:bg-red-700 focus:bg-red-700 text-white font-black text-md py-2 px-4 rounded-xl w-[96%]" onClick={() => setTeleArtifacts(teleArtifacts + 1)}>CANCEL / BACK</button></div>
+                <div className="row-start-2 col-start-2 col-span-1 text-white font-medium text-center" ><Link href={`/scout/record/${eventid}`} >
+                  <button className="bg-red-900 hover:bg-red-700 focus:bg-red-700 text-white font-black text-md py-2 px-4 rounded-xl w-[96%]">CANCEL / BACK</button>
+                </Link></div>  
               </div>
         </div>
 
