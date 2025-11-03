@@ -94,17 +94,22 @@ export default function Page({ params, }: { params: Promise<{ eventid: string }>
 
 
   return (<>
-{qualMatches[0].description === 'loading' ? (
-            <p>Loading matches...</p>
+
+{event.code === 'loading' ? (
+            <p>Loading Event Data...</p>
 ) : (
     <div className='text-black p-2 w-[100%]'>
         <h1 className="text-2xl font-black">{event.name}</h1>
         <p className="text-sm font-normal">{event.typeName} | {event.city}, {event.stateprov}, {event.country} | {returnDate(event.dateStart)} to {returnDate(event.dateEnd)}</p>
 
+        <h1 className="p-2 font-bold text-xl text-black">Matches <span className="text-sm">(from FTC-EVENTS API)</span></h1>
+        <p className="p-2 font-light text-sm text-black italic mb-2">During the event the yet to be played matched will be displayed first with the results from the played matches listed below.</p>
 
-            <h1 className="p-2 font-bold text-xl text-black">Matches <span className="text-sm">(from FTC-EVENTS API)</span></h1>
- 
-
+    {qualMatches.length < 1 ? (
+        <p className="p-5 bg-red-200 rounded-md text-xl font-bold mb-2 italic">No Matches to display. The event schedule is ussually updated after the event starts and all robots have passed inspection.</p>
+    ) : qualMatches[0].description === 'loading' ? (
+            <p>Loading matches...</p>
+    ) : (<>
         {qualMatches.map((match, index: number) => (
             <div key={index} className="grid grid-cols-4 grid-rows-4 p-0 bg-slate-100 border-2 border-slate-500 mb-2 mr-1 w-[100%] rounded-md justify-items-center place-items-center">
                 <div className="row-start-1 col-start-1 col-span-4 p-1 text-sm font-semibold bg-slate-500 text-white w-full h-full ">{match.description}</div>
@@ -151,7 +156,8 @@ export default function Page({ params, }: { params: Promise<{ eventid: string }>
                 <div className="row-start-4 col-start-1 col-span-2 p-1 pr-2 text-xs font-normal bg-slate-500 text-white w-full h-full text-right">AUTO: {match.scoreRedAuto} FOUL: {match.scoreRedFoul}</div>
                 <div className="row-start-4 col-start-3 col-span-2 p-1 pl-2 text-xs font-normal bg-slate-500 text-white w-full h-full text-left">AUTO: {match.scoreBlueAuto} FOUL: {match.scoreBlueFoul}</div>
             </div>
-        ))}
+    ))}
+    </>)}
 
 
 

@@ -76,7 +76,7 @@ export default function Page({ params, }: { params: Promise<{ eventid: string }>
                         <button className="w-[100%] bg-blue-800 hover:bg-blue-700 active:bg-blue-900 py-2 rounded-md text-white font-semibold">Qualification Matches</button>
                         </Link>
                     </div>
-                    <div  className="flex flex-row gap-2 bg-slate-100 mb-1 mr-1 w-[99%] sm:w-[49%] lg:w-[32%] rounded-md justify-items-center place-items-center">
+                    <div  className="flex flex-row mb-1 mr-1 w-[99%] sm:w-[49%] place-items-center">
                         <Link href={`/decode/${event.code}/playoffs`} className="w-[100%]">
                         <button className="w-[100%] bg-blue-800 hover:bg-blue-700 active:bg-blue-900 py-2 rounded-md text-white font-semibold">Playoff Matches</button>
                         </Link>
