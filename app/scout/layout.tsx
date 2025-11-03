@@ -25,7 +25,7 @@ export default function RootLayout({
           <Image src="/ui/FTC-SCOUT-white.svg" alt="FTC | SCOUTING APP" width={150} height={25} />
           </Link>
       </div>
-      <main className="flex flex-row row-start-2 w-full">
+      <main className="flex flex-row row-start-2 w-full min-h-screen bg-slate-900">
         {children}
       </main>
       <footer className="

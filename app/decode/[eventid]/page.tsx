@@ -28,13 +28,13 @@ interface EventItem
     }
 
 
-    function returnDate(date: string) {
-        const dateObj = new Date(date);
-        const month = dateObj.getMonth() + 1;
-        const day = dateObj.getDate();
-        const year = dateObj.getFullYear();
-        return month + "/" + day+ "/" + year;
-    }
+function returnDate(date: string) {
+    const dateObj = new Date(date);
+    const month = dateObj.getMonth() + 1;
+    const day = dateObj.getDate();
+    const year = dateObj.getFullYear();
+    return month + "/" + day+ "/" + year;
+}
 
 
 export default function Page({ params, }: { params: Promise<{ eventid: string }>}){
@@ -95,7 +95,9 @@ export default function Page({ params, }: { params: Promise<{ eventid: string }>
             <div className="bg-white p-1 flex flex-row flex-wrap rounded-b-md">
                 
                     <div  className="flex flex-row gap-2 p-2 bg-slate-100 mb-1 mr-1 w-[99%] sm:w-[49%] lg:w-[32%] rounded-md justify-items-center place-items-center">
-                        <button className="">Scout Matches</button>
+                        <Link href={`/scout/record/${event.code}`} className="w-[100%]">
+                        <button className="w-[100%] bg-blue-800 hover:bg-blue-700 active:bg-blue-900 py-2 rounded-md text-white font-semibold">Scout QUalifier Matches</button>
+                        </Link>
                     </div>
                     <div  className="flex flex-row gap-2 p-2 bg-slate-100 mb-1 mr-1 w-[99%] sm:w-[49%] lg:w-[32%] rounded-md justify-items-center place-items-center">
                         <button className="">Insights</button>
