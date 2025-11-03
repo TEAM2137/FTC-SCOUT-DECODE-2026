@@ -101,24 +101,76 @@ export default function Page({ params, }: { params: Promise<{ eventid: string }>
             <p>Loading rankings...</p>
     ) : (
         <div className="flex flex-col p-0 bg-slate-100 border-2 border-slate-500 mb-2 mr-1 w-[100%] rounded-md justify-items-center place-items-center">
-        {rankings.map((rank, index: number) => (
-            <div key={index} className="grid grid-cols-12 sm:grid-cols-18 w-full p-0">
-                <div className="col-start-1 col-span-1 p-0 text-2xl font-black bg-slate-500 text-white w-full h-full text-center">{rank.rank}</div>
-                <div className="col-start-2 col-span-2 p-2 text-sm font-bold bg-slate-100 text-black w-full h-full text-center">{rank.teamNumber}</div>
-                <div className="col-start-4 col-span-6 p-3 text-xs font-semibold bg-slate-100 text-black w-full h-full text-left">{rank.teamName}</div>
-                <div className="col-start-10 col-span-1 p-2 text-sm font-bold bg-slate-100 text-black w-full h-full text-center">{rank.sortOrder1}</div>
-                <div className="col-start-11 col-span-1 p-2 text-xs font-bold bg-slate-100 text-black w-full h-full text-center">{rank.sortOrder2}</div>
-                <div className="col-start-12 col-span-1 p-2 text-xs font-bold bg-slate-100 text-black w-full h-full text-center">{rank.sortOrder3}</div>
-                <div className="col-start-13 col-span-1 p-2 text-xs font-bold bg-slate-100 text-black w-full h-full text-center">{rank.sortOrder4}</div>
 
-                <div className="col-start-14 col-span-1 p-2 text-xs font-bold bg-slate-100 text-black w-full h-full text-center">{rank.wins}</div>
-                <div className="col-start-15 col-span-1 p-2 text-xs font-bold bg-slate-100 text-black w-full h-full text-center">{rank.losses}</div>
-                <div className="col-start-16 col-span-1 p-2 text-xs font-bold bg-slate-100 text-black w-full h-full text-center">{rank.ties}</div>
+            <div className="grid sm:hidden grid-cols-12 w-full p-0">
+                <div className="col-start-1 col-span-1 p-0 text-xs font-normal bg-slate-500 text-white w-full h-full text-center">Rank</div>
+                <div className="col-start-2 col-span-2 p-0 text-xs font-normal bg-slate-100 text-black w-full h-full text-center">Number</div>
+                <div className="col-start-4 col-span-6 p-0 text-xs font-normal bg-slate-100 text-black w-full h-full text-center">Name</div>
+                <div className="col-start-10 col-span-1 p-0 text-xs font-normal bg-slate-100 text-black w-full h-full text-center">ARP</div>
+                <div className="col-start-11 col-span-1 p-0 text-xs font-normal bg-slate-100 text-black w-full h-full text-center">AMS</div>
+                <div className="col-start-12 col-span-1 p-0 text-xs font-normal  text-black w-full h-full text-center">ABP</div>
             </div>
-        ))}
+
+            <div className="hidden sm:grid grid-cols-17 w-full p-0">
+                <div className="col-start-1 col-span-1 p-0 text-xs font-normal bg-slate-500 text-white w-full h-full text-center">Rank</div>
+                <div className="col-start-2 col-span-2 p-0 text-xs font-normal bg-slate-100 text-black w-full h-full text-center">Number</div>
+                <div className="col-start-4 col-span-6 p-0 text-xs font-normal bg-slate-100 text-black w-full h-full text-center">Name</div>
+                <div className="col-start-10 col-span-1 p-0 text-xs font-normal bg-slate-100 text-black w-full h-full text-center">ARP</div>
+                <div className="col-start-11 col-span-1 p-0 text-xs font-normal bg-slate-100 text-black w-full h-full text-center">AMS</div>
+                <div className="col-start-12 col-span-1 p-0 text-xs font-normal  text-black w-full h-full text-center">ABP</div>
+                <div className=" col-start-13 col-span-1 p-0 text-xs font-normal bg-slate-100 text-black w-full h-full text-center">AAS</div>
+                <div className=" col-start-14 col-span-1 p-0 text-xs font-normal bg-slate-100 text-black w-full h-full text-center">Ws</div>
+                <div className=" col-start-15 col-span-1 p-0 text-xs font-normal bg-slate-100 text-black w-full h-full text-center">Ls</div>
+                <div className=" col-start-16 col-span-1 p-0 text-xs font-normal text-black w-full h-full text-center">Ts</div>
+                <div className=" col-start-17 col-span-1 p-0 text-xs font-normal text-black w-full h-full text-center">P</div>
+            </div>
+
+        {rankings.map((rank, index: number) => (<div key={index} className="w-full p-0">
+            <div className="grid sm:hidden grid-cols-12 w-full p-0">
+                <div className="col-start-1 col-span-1 p-0 text-2xl font-black bg-slate-500 text-white w-full h-full text-center">{rank.rank}</div>
+                <div className="col-start-2 col-span-2 p-2 text-sm font-bold text-black w-full h-full text-center">{rank.teamNumber}</div>
+                <div className="col-start-4 col-span-6 p-3 text-xs font-semibold text-black w-full h-full text-left">{rank.teamName}</div>
+                <div className="col-start-10 col-span-1 p-2 text-sm font-bold text-black w-full h-full text-center">{rank.sortOrder1}</div>
+                <div className="col-start-11 col-span-1 p-2 text-xs font-bold text-black w-full h-full text-center">{rank.sortOrder2}</div>
+                <div className="col-start-12 col-span-1 p-2 text-xs font-bold text-black w-full h-full text-center">{rank.sortOrder3}</div>
+            </div>
+
+            <div className="hidden sm:grid grid-cols-17 w-full p-0">
+                <div className="col-start-1 col-span-1 p-0 text-2xl font-black bg-slate-500 text-white w-full h-full text-center">{rank.rank}</div>
+                <div className="col-start-2 col-span-2 p-2 text-sm font-bold text-black w-full h-full text-center">{rank.teamNumber}</div>
+                <div className="col-start-4 col-span-6 p-3 text-xs font-semibold text-black w-full h-full text-left">{rank.teamName}</div>
+                <div className="col-start-10 col-span-1 p-2 text-sm font-bold text-black w-full h-full text-center">{rank.sortOrder1}</div>
+                <div className="col-start-11 col-span-1 p-2 text-xs font-bold text-black w-full h-full text-center">{rank.sortOrder2}</div>
+                <div className="col-start-12 col-span-1 p-2 text-xs font-bold text-black w-full h-full text-center">{rank.sortOrder3}</div>
+                
+                <div className=" col-start-13 col-span-1 p-2 text-xs font-bold text-black w-full h-full text-center">{rank.sortOrder4}</div>
+                <div className=" col-start-14 col-span-1 p-2 text-xs font-bold text-black w-full h-full text-center">{rank.wins}</div>
+                <div className=" col-start-15 col-span-1 p-2 text-xs font-bold text-black w-full h-full text-center">{rank.losses}</div>
+                <div className=" col-start-16 col-span-1 p-2 text-xs font-bold text-black w-full h-full text-center">{rank.ties}</div>
+                <div className=" col-start-17 col-span-1 p-2 text-xs font-bold text-black w-full h-full text-center">{rank.matchesPlayed}</div>
+            </div>
+        </div>))}
     </div>)}
 
-
+            <div className="grid grid-cols-6 grid-rows-9  w-[100%] rounded-md border-2 border-slate-500">
+                <div className="col-start-1 col-span-6 p-2 text-lg bg-slate-500 font-semibold text-white w-full h-full text-left">Legend</div>
+                <div className="row-start-2 col-start-1 col-span-1 p-1 text-sm font-bold text-black w-full h-full text-center">ARP</div>
+                <div className="row-start-2 col-start-2 col-span-5 p-1 text-sm font-normal text-black w-full h-full text-left">Average Ranking Points</div>
+                <div className="row-start-3 col-start-1 col-span-1 p-1 text-sm font-bold text-black w-full h-full text-center">AMS</div>
+                <div className="row-start-3 col-start-2 col-span-5 p-1 text-sm font-normal text-black w-full h-full text-left">Average Match Score</div>
+                <div className="row-start-4 col-start-1 col-span-1 p-1 text-sm font-bold text-black w-full h-full text-center">ABP</div>
+                <div className="row-start-4 col-start-2 col-span-5 p-1 text-sm font-normal text-black w-full h-full text-left">Average Base Points</div>
+                <div className="row-start-5 col-start-1 col-span-1 p-1 text-sm font-bold text-black w-full h-full text-center">AAS</div>
+                <div className="row-start-5 col-start-2 col-span-5 p-1 text-sm font-normal text-black w-full h-full text-left">Average Autonomous Points</div>
+                <div className="row-start-6 col-start-1 col-span-1 p-1 text-sm font-bold text-black w-full h-full text-center">Ws</div>
+                <div className="row-start-6 col-start-2 col-span-5 p-1 text-sm font-normal text-black w-full h-full text-left">Matches Won</div>
+                <div className="row-start-7 col-start-1 col-span-1 p-1 text-sm font-bold text-black w-full h-full text-center">Ls</div>
+                <div className="row-start-7 col-start-2 col-span-5 p-1 text-sm font-normal text-black w-full h-full text-left">Matches Lost</div>
+                <div className="row-start-8 col-start-1 col-span-1 p-1 text-sm font-bold text-black w-full h-full text-center">Ts</div>
+                <div className="row-start-8 col-start-2 col-span-5 p-1 text-sm font-normal text-black w-full h-full text-left">Matches Tied</div>
+                <div className="row-start-9 col-start-1 col-span-1 p-1 text-sm font-bold text-black w-full h-full text-center">Ps</div>
+                <div className="row-start-9 col-start-2 col-span-5 p-1 text-sm font-normal text-black w-full h-full text-left">Matches Played</div>
+            </div>
 
 
 
