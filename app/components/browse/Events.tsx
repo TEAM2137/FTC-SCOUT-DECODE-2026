@@ -191,7 +191,7 @@ const Events = () => {
     }
 
   return (
-    <div className="text-slate-950 p-4 mx-auto min-w-[98%] bg-slate-200">
+    <div className="text-slate-950 p-4 mx-auto min-w-[98%] bg-slate-100">
         <div className="flex flex-row flex-wrap gap-1 border-b-2 w-[100%] border-slate-400 pb-2 mb-2">
             <div className="flex"><h1 className="text-2xl font-black">FTC Events</h1></div>
             <div className="flex place-self-end ml-auto"><button className={showFilters ? slectedSyle : unselectedStyle} onClick={() => setShowFilters(!showFilters)}>Filters</button></div>

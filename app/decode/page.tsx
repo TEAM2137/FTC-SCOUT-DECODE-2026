@@ -4,7 +4,7 @@ import Events from "@/app/components/browse/Events";
 
 const Page = () => {
   return (
-    <div>
+    <div className="bg-slate-100">
         <Events />
     </div>
   )
