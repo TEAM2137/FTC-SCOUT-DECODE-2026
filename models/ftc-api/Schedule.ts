@@ -1,7 +1,9 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-export interface ISchedule extends Document {    
+export interface ISchedule extends Document {  
+    scheduleID: string,  
     eventCode: string,
+    tournamentLevel: string,
     schedule: [
         {
             description: string,
@@ -36,10 +38,18 @@ export interface ISchedule extends Document {
 }
 
 const ScheduleSchema: Schema<ISchedule> = new Schema({
-    eventCode: {
+    scheduleID: {
         type: String,
         required: true,
         unique: true
+    },
+    eventCode: {
+        type: String,
+        required: true,
+    },
+    tournamentLevel: {
+        type: String,
+        required: true,
     },
     schedule: [{
         description: {
