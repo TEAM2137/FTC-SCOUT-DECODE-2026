@@ -102,7 +102,7 @@ export default function Page({ params, }: { params: Promise<{ eventid: string }>
         <h1 className="text-2xl font-black">{event.name}</h1>
         <p className="text-sm font-normal">{event.typeName} | {event.city}, {event.stateprov}, {event.country} | {returnDate(event.dateStart)} to {returnDate(event.dateEnd)}</p>
 
-        <h1 className="p-2 font-bold text-xl text-black">Matches <span className="text-sm">(from FTC-EVENTS API)</span></h1>
+        <h1 className="p-2 font-bold text-xl text-black">Playoff Matches</h1>
         <p className="p-2 font-light text-sm text-black italic mb-2">During the event the yet to be played matches will be displayed first with the results from the played matches listed below.</p>
 
     {qualMatches.length < 1 ? (
