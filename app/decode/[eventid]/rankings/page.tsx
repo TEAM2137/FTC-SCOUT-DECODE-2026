@@ -151,7 +151,7 @@ export default function Page({ params, }: { params: Promise<{ eventid: string }>
         </div>))}
     </div>)}
 
-            <div className="grid grid-cols-6 grid-rows-9  w-[100%] rounded-md border-2 border-slate-500">
+            <div className="grid grid-cols-6 grid-rows-9  w-[100%] rounded-md border-2 border-slate-500 mb-2">
                 <div className="col-start-1 col-span-6 p-2 text-lg bg-slate-500 font-semibold text-white w-full h-full text-left">Legend</div>
                 <div className="row-start-2 col-start-1 col-span-1 p-1 text-sm font-bold text-black w-full h-full text-center">ARP</div>
                 <div className="row-start-2 col-start-2 col-span-5 p-1 text-sm font-normal text-black w-full h-full text-left">Average Ranking Points</div>
