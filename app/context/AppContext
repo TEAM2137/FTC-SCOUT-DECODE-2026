@@ -1,0 +1,40 @@
+'use client'
+
+import { createContext, useContext, useState } from 'react';
+
+interface IAppContext {
+    filters: {
+        region: string,
+        pastEvents: boolean,
+        upcomingEvents: boolean,
+        eventTypes: string[]
+    }
+}
+
+const defaultAppContext: IAppContext = {
+    filters: {
+        region: 'all',
+        pastEvents: false,
+        upcomingEvents: true,
+        eventTypes: [ 'Qualifier']
+    }
+};
+
+export const AppContext = createContext<IAppContext>(defaultAppContext);
+
+export function AppContextProvider({ children }: { children: React.ReactNode }) {
+    const [AppContext, setAppContext] = useState<IAppContext>(defaultAppContext);
+
+
+    const changeAppContext = (state: Partial<IAppContext>) => {
+        setAppContext((prevState) => ({...prevState, ...state}));
+    };
+
+    return (
+        <AppContext.Provider value={{ ...AppContext, changeAppContext }}>
+            {children}
+        </AppContext.Provider>
+    );
+}
+
+export const useAppContext = () => useContext(AppContext);  
