@@ -13,10 +13,7 @@ const Header = () => {
         </Link>
       </div>
       <div className="ml-auto mr-2">
-        <button className="text-white flex flex-row">
-        <Image src="/icons/orange-down.svg" alt="logo" width={20} height={20} /> 
-        menu
-        </button>
+        <Link href="/" className="text-white text-xs font-bold">HOME</Link> | <Link href="/scout/" className="text-white text-xs font-bold">EVENTS</Link>
       </div>
       
     </div>

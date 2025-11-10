@@ -36,8 +36,8 @@ export default function RootLayout({
           {children}
         </main>
 
-        <footer className="fixed bottom-0 w-full h-24 bg-zinc-800 text-white p-4 z-50">  
-          // Footer could go here
+        <footer className="flex flex-row fixed  justify-center place-items-center bottom-0 w-full h-8 bg-zinc-800 text-white p-4 z-50">  
+          <div className="">&copy;2026 TEAM 2137</div>
         </footer>
       </body>
     </html>

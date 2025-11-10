@@ -5,6 +5,7 @@ import Loading from '../ui/Loading';
 import Link from 'next/link';
 
 
+
 interface IScheduleMatch
 {
     eventCode: string,
@@ -40,6 +41,28 @@ interface IScheduleMatch
     ]
   }
 
+interface IMatchScore
+{
+      scoutID: string,
+      scoutTeam: string,
+      scoutName: string,
+      eventCode: string,
+      matchLevel: string,
+      matchNumber: number,
+      matchSeries: number,
+      teamNumber: number,
+      autoArtifacts: number,
+      teleArtifacts: number,
+      autoLeave: number,
+      teleBaseFull: number,
+      teleBasePartial: number,
+      doubleBaseRaise: number,
+      doubleBaseLift: number,
+      score: number,
+      ignore: boolean,
+      hide: boolean,
+}
+
 function returnTime(date: string) {
     const dateObj = new Date(date);
     let hours = dateObj.getHours();
@@ -52,12 +75,24 @@ function returnTime(date: string) {
 
 const Schedule = ({ eventCode }: { eventCode: string}) => {
     const [schedule, setSchedule] = useState<IScheduleMatch[]>([]);
+    const [matchData, setMatchData] = useState<IMatchScore[]>([]);
     const [scheduleLoaded, setScheduleLoaded] = useState<boolean>(false);
     const [unplayedquals, setUnplayedquals] = useState<IScheduleMatch[]>([]);
     const [unplayedplayoffs, setUnplayedplayoffs] = useState<IScheduleMatch[]>([]);
     const [playedquals, setPlayedquals] = useState<IScheduleMatch[]>([]);
     const [playedplayoffs, setPlayedplayoffs] = useState<IScheduleMatch[]>([]);
     const [sortMatches, setSortMatches] = useState<boolean>(false);
+
+
+    useEffect(() => {
+        fetch('/api/scout/matches/' + eventCode + '/matchdata', {cache: 'force-cache', next: { revalidate: 15 }})
+        .then(res => res.json())
+        .then(data => {
+            data.sort((a: IMatchScore, b: IMatchScore) => a.matchNumber - b.matchNumber).sort((a: IMatchScore, b: IMatchScore) => b.matchLevel.localeCompare(a.matchLevel));
+            setMatchData(data);
+        })
+        .catch(err => console.log(err));
+    }, []);
 
     useEffect(() => {
         fetch('/api/scout/matches/' + eventCode, {cache: 'force-cache', next: { revalidate: 15 }})
@@ -70,6 +105,8 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
         })
         .catch(err => console.log(err));
     }, []);
+
+
 
     useEffect(() => {
         function distributeMatches() {
@@ -271,7 +308,11 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
                                     'px-1.5 text-xs text-white bg-green-600 rounded-full' : 
                                     'px-1.5 text-xs text-white bg-red-600 rounded-full' } >&nbsp;</button>
 
-                                <button className="px-1 text-sm text-white rounded-full" >--</button>
+                                <button className="px-1 text-sm text-white rounded-full" >
+                                    {matchData.filter((matchScore) => matchScore.teamNumber === team.teamNumber && matchScore.matchLevel === match.matchLevel && matchScore.matchNumber === match.matchNumber && matchScore.matchSeries === match.matchSeries).map((matchScore, i: number) => (
+                                        <span key={i}>{i === 0 && matchScore.autoArtifacts + matchScore.teleArtifacts}</span>
+                                    ))}
+                                </button>
                                 
                                 {team.teleBase === 'NONE' &&
                                 <button className='px-1.5 text-xs text-white bg-red-600 rounded-full'>&nbsp;</button>
@@ -293,7 +334,11 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
                                     'px-1.5 text-xs text-white bg-green-600 rounded-full' : 
                                     'px-1.5 text-xs text-white bg-red-600 rounded-full' } >&nbsp;</button>
 
-                                <button className="px-1 text-sm text-white rounded-full" >--</button>
+                                <button className="px-1 text-sm text-white rounded-full" >
+                                    {matchData.filter((matchScore) => matchScore.teamNumber === team.teamNumber && matchScore.matchLevel === match.matchLevel && matchScore.matchNumber === match.matchNumber && matchScore.matchSeries === match.matchSeries).map((matchScore, i: number) => (
+                                        <span key={i}>{i === 0 && matchScore.autoArtifacts + matchScore.teleArtifacts}</span>
+                                    ))}
+                                </button>
                                 
                                 {team.teleBase === 'NONE' &&
                                 <button className='px-1.5 text-xs text-white bg-red-600 rounded-full'>&nbsp;</button>
@@ -315,7 +360,11 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
                                     'px-1.5 text-xs text-white bg-green-600 rounded-full' : 
                                     'px-1.5 text-xs text-white bg-red-600 rounded-full' } >&nbsp;</button>
 
-                                <button className="px-1 text-sm text-white rounded-full" >--</button>
+                                <button className="px-1 text-sm text-white rounded-full" >
+                                    {matchData.filter((matchScore) => matchScore.teamNumber === team.teamNumber && matchScore.matchLevel === match.matchLevel && matchScore.matchNumber === match.matchNumber && matchScore.matchSeries === match.matchSeries).map((matchScore, i: number) => (
+                                        <span key={i}>{i === 0 && matchScore.autoArtifacts + matchScore.teleArtifacts}</span>
+                                    ))}
+                                </button>
                                 
                                 {team.teleBase === 'NONE' &&
                                 <button className='px-1.5 text-xs text-white bg-red-600 rounded-full'>&nbsp;</button>
@@ -337,7 +386,11 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
                                     'px-1.5 text-xs text-white bg-green-600 rounded-full' : 
                                     'px-1.5 text-xs text-white bg-red-600 rounded-full' } >&nbsp;</button>
 
-                                <button className="px-1 text-sm text-white rounded-full" >--</button>
+                                <button className="px-1 text-sm text-white rounded-full" >
+                                    {matchData.filter((matchScore) => matchScore.teamNumber === team.teamNumber && matchScore.matchLevel === match.matchLevel && matchScore.matchNumber === match.matchNumber && matchScore.matchSeries === match.matchSeries).map((matchScore, i: number) => (
+                                        <span key={i}>{i === 0 && matchScore.autoArtifacts + matchScore.teleArtifacts}</span>
+                                    ))}
+                                </button>
                                 
                                 {team.teleBase === 'NONE' &&
                                 <button className='px-1.5 text-xs text-white bg-red-600 rounded-full'>&nbsp;</button>
@@ -426,7 +479,11 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
                                     'px-1.5 text-xs text-white bg-green-600 rounded-full' : 
                                     'px-1.5 text-xs text-white bg-red-600 rounded-full' } >&nbsp;</button>
 
-                                <button className="px-1 text-sm text-white rounded-full" >--</button>
+                                <button className="px-1 text-sm text-white rounded-full" >
+                                    {matchData.filter((matchScore) => matchScore.teamNumber === team.teamNumber && matchScore.matchLevel === match.matchLevel && matchScore.matchNumber === match.matchNumber && matchScore.matchSeries === match.matchSeries).map((matchScore, i: number) => (
+                                        <span key={i}>{i === 0 && matchScore.autoArtifacts + matchScore.teleArtifacts}</span>
+                                    ))}
+                                </button>
                                 
                                 {team.teleBase === 'NONE' &&
                                 <button className='px-1.5 text-xs text-white bg-red-600 rounded-full'>&nbsp;</button>
@@ -448,7 +505,11 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
                                     'px-1.5 text-xs text-white bg-green-600 rounded-full' : 
                                     'px-1.5 text-xs text-white bg-red-600 rounded-full' } >&nbsp;</button>
 
-                                <button className="px-1 text-sm text-white rounded-full" >--</button>
+                                <button className="px-1 text-sm text-white rounded-full" >
+                                    {matchData.filter((matchScore) => matchScore.teamNumber === team.teamNumber && matchScore.matchLevel === match.matchLevel && matchScore.matchNumber === match.matchNumber && matchScore.matchSeries === match.matchSeries).map((matchScore, i: number) => (
+                                        <span key={i}>{i === 0 && matchScore.autoArtifacts + matchScore.teleArtifacts}</span>
+                                    ))}
+                                </button>
                                 
                                 {team.teleBase === 'NONE' &&
                                 <button className='px-1.5 text-xs text-white bg-red-600 rounded-full'>&nbsp;</button>
@@ -470,7 +531,11 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
                                     'px-1.5 text-xs text-white bg-green-600 rounded-full' : 
                                     'px-1.5 text-xs text-white bg-red-600 rounded-full' } >&nbsp;</button>
 
-                                <button className="px-1 text-sm text-white rounded-full" >--</button>
+                                <button className="px-1 text-sm text-white rounded-full" >
+                                    {matchData.filter((matchScore) => matchScore.teamNumber === team.teamNumber && matchScore.matchLevel === match.matchLevel && matchScore.matchNumber === match.matchNumber && matchScore.matchSeries === match.matchSeries).map((matchScore, i: number) => (
+                                        <span key={i}>{i === 0 && matchScore.autoArtifacts + matchScore.teleArtifacts}</span>
+                                    ))}
+                                </button>
                                 
                                 {team.teleBase === 'NONE' &&
                                 <button className='px-1.5 text-xs text-white bg-red-600 rounded-full'>&nbsp;</button>
@@ -492,8 +557,12 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
                                     'px-1.5 text-xs text-white bg-green-600 rounded-full' : 
                                     'px-1.5 text-xs text-white bg-red-600 rounded-full' } >&nbsp;</button>
 
-                                <button className="px-1 text-sm text-white rounded-full" >--</button>
-                                
+                                <button className="px-1 text-sm text-white rounded-full" >
+                                    {matchData.filter((matchScore) => matchScore.teamNumber === team.teamNumber && matchScore.matchLevel === match.matchLevel && matchScore.matchNumber === match.matchNumber && matchScore.matchSeries === match.matchSeries).map((matchScore, i: number) => (
+                                        <span key={i}>{i === 0 && matchScore.autoArtifacts + matchScore.teleArtifacts}</span>
+                                    ))}
+                                </button>
+                                 
                                 {team.teleBase === 'NONE' &&
                                 <button className='px-1.5 text-xs text-white bg-red-600 rounded-full'>&nbsp;</button>
                                 }
