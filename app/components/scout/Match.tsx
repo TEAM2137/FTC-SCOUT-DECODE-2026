@@ -90,7 +90,7 @@ const Match = ({ eventCode, level, number, series }: { eventCode: string, level:
     const [matchLoaded, setMatchLoaded] = useState<boolean>(false);
 
     useEffect(() => {
-        fetch('/api/scout/matches/' + eventCode + '/' + level + '/' + number + '/' + series)
+        fetch('/api/scout/matches/' + eventCode + '/' + level + '/' + number + '/' + series, {cache: 'force-cache', next: { revalidate: 15 }})
         .then(res => res.json())
         .then(data => {
             setMatch(data);
@@ -100,7 +100,7 @@ const Match = ({ eventCode, level, number, series }: { eventCode: string, level:
     }, []);
 
     useEffect(() => {
-        fetch('/api/scout/matches/' + eventCode + '/' + level + '/' + number + '/' + series + '/matchdata')
+        fetch('/api/scout/matches/' + eventCode + '/' + level + '/' + number + '/' + series + '/matchdata', {cache: 'no-cache'})
         .then(res => res.json())
         .then(data => {
             setMatchData(data);
@@ -134,11 +134,19 @@ const Match = ({ eventCode, level, number, series }: { eventCode: string, level:
                         </div>
                     </div>
                     {match.teams.filter((team) => team.station === 'Red1').map((team, i: number) => (
-                    <div key={i+'team'} className="grid grid-cols-[80px_1fr] grid-rows-[50px] m-1 rounded-lg bg-red-300 hover:bg-red-200">
+                    <div key={i+'team'} className="grid grid-cols-[80px_1fr] m-1 rounded-lg bg-red-300 hover:bg-red-200">
                         <div  className="justify-items-center place-content-center text-center text-xl font-bold text-gray-800 rounded-l-lg" >{team.teamNumber}</div>
-                        <div  className="justify-items-center place-content-center text-center text-xl font-bold text-gray-800 rounded-l-lg" >
+                        <div  className="p-2 justify-items-center place-content-center text-center text-xl font-bold text-gray-800 rounded-l-lg" >
                             {matchData.filter((matchScore) => matchScore.teamNumber === team.teamNumber).map((matchScore, i: number) => (
-                            <div>{matchScore.scoutName}</div>
+                            <div key={i} className="grid grid-cols-4 sm:grid-cols-6 grid-rows-1 w-full justify-items-center text-xs text-gray-800 border-b-2 border-gray-500 " >
+                                
+                                <div>Afs {matchScore.autoArtifacts + matchScore.teleArtifacts} ({matchScore.autoArtifacts}|{matchScore.teleArtifacts}) </div>
+                                <div>Leave: {matchScore.autoLeave === 1 ? 'Yes' : 'No'}</div>
+                                <div>Park: {matchScore.teleBaseFull === 1 && 'Full'}{matchScore.teleBasePartial === 1 && 'Partial'}{matchScore.teleBaseFull === 0 && matchScore.teleBasePartial === 0 && 'None'}</div>
+                                <div>{matchScore.scoutTeam}-{matchScore.scoutName}</div>
+                                <div></div>
+                                <button className="hidden sm:block text-xs text-white font-bold p-1 px-2 rounded-lg bg-blue-900">EDIT</button>
+                            </div>
                             ))}
                             <Link href={'/scout/record/'+eventCode+'/'+level+'/'+number+'/'+series+'/'+team.teamNumber}>
                             <button>Click To Scout</button>
@@ -147,11 +155,19 @@ const Match = ({ eventCode, level, number, series }: { eventCode: string, level:
                     </div>
                     ))}
                     {match.teams.filter((team) => team.station === 'Red2').map((team, i: number) => (
-                    <div key={i+'team'} className="grid grid-cols-[80px_1fr] grid-rows-[50px] m-1 rounded-lg bg-red-300 hover:bg-red-200">
+                    <div key={i+'team'} className="grid grid-cols-[80px_1fr] m-1 rounded-lg bg-red-300 hover:bg-red-200">
                         <div  className="justify-items-center place-content-center text-center text-xl font-bold text-gray-800 rounded-l-lg" >{team.teamNumber}</div>
-                        <div  className="justify-items-center place-content-center text-center text-xl font-bold text-gray-800 rounded-l-lg" >
+                        <div  className="p-2 justify-items-center place-content-center text-center text-xl font-bold text-gray-800 rounded-l-lg" >
                             {matchData.filter((matchScore) => matchScore.teamNumber === team.teamNumber).map((matchScore, i: number) => (
-                            <div>{matchScore.scoutName}</div>
+                            <div key={i} className="grid grid-cols-4 sm:grid-cols-6 grid-rows-1 w-full justify-items-center text-xs text-gray-800 border-b-2 border-gray-500 " >
+                                
+                                <div>Afs {matchScore.autoArtifacts + matchScore.teleArtifacts} ({matchScore.autoArtifacts}|{matchScore.teleArtifacts}) </div>
+                                <div>Leave: {matchScore.autoLeave === 1 ? 'Yes' : 'No'}</div>
+                                <div>Park: {matchScore.teleBaseFull === 1 && 'Full'}{matchScore.teleBasePartial === 1 && 'Partial'}{matchScore.teleBaseFull === 0 && matchScore.teleBasePartial === 0 && 'None'}</div>
+                                <div>{matchScore.scoutTeam}-{matchScore.scoutName}</div>
+                                <div></div>
+                                <button className="hidden sm:block text-xs text-white font-bold p-1 px-2 rounded-lg bg-blue-900">EDIT</button>
+                            </div>
                             ))}
                             <Link href={'/scout/record/'+eventCode+'/'+level+'/'+number+'/'+series+'/'+team.teamNumber}>
                             <button>Click To Scout</button>
@@ -169,11 +185,19 @@ const Match = ({ eventCode, level, number, series }: { eventCode: string, level:
                         </div>
                     </div>
                     {match.teams.filter((team) => team.station === 'Blue1').map((team, i: number) => (
-                    <div key={i+'team'} className="grid grid-cols-[80px_1fr] grid-rows-[50px] m-1 rounded-lg bg-blue-300 hover:bg-blue-200">
+                    <div key={i+'team'} className="grid grid-cols-[80px_1fr] m-1 rounded-lg bg-blue-300 hover:bg-blue-200">
                         <div  className="justify-items-center place-content-center text-center text-xl font-bold text-gray-800 rounded-l-lg" >{team.teamNumber}</div>
-                        <div  className="justify-items-center place-content-center text-center text-xl font-bold text-gray-800 rounded-l-lg" >
+                        <div  className="p-2 justify-items-center place-content-center text-center text-xl font-bold text-gray-800 rounded-l-lg" >
                             {matchData.filter((matchScore) => matchScore.teamNumber === team.teamNumber).map((matchScore, i: number) => (
-                            <div>{matchScore.scoutName}</div>
+                            <div key={i} className="grid grid-cols-4 sm:grid-cols-6 grid-rows-1 w-full justify-items-center text-xs text-gray-800 border-b-2 border-gray-500 " >
+                                
+                                <div>Afs {matchScore.autoArtifacts + matchScore.teleArtifacts} ({matchScore.autoArtifacts}|{matchScore.teleArtifacts}) </div>
+                                <div>Leave: {matchScore.autoLeave === 1 ? 'Yes' : 'No'}</div>
+                                <div>Park: {matchScore.teleBaseFull === 1 && 'Full'}{matchScore.teleBasePartial === 1 && 'Partial'}{matchScore.teleBaseFull === 0 && matchScore.teleBasePartial === 0 && 'None'}</div>
+                                <div>{matchScore.scoutTeam}-{matchScore.scoutName}</div>
+                                <div></div>
+                                <button className="hidden sm:block text-xs text-white font-bold p-1 px-2 rounded-lg bg-blue-900">EDIT</button>
+                            </div>
                             ))}
                             <Link href={'/scout/record/'+eventCode+'/'+level+'/'+number+'/'+series+'/'+team.teamNumber}>
                             <button>Click To Scout</button>
@@ -186,7 +210,7 @@ const Match = ({ eventCode, level, number, series }: { eventCode: string, level:
                         <div  className="justify-items-center place-content-center text-center text-xl font-bold text-gray-800 rounded-l-lg" >{team.teamNumber}</div>
                         <div  className="p-2 justify-items-center place-content-center text-center text-xl font-bold text-gray-800 rounded-l-lg" >
                             {matchData.filter((matchScore) => matchScore.teamNumber === team.teamNumber).map((matchScore, i: number) => (
-                            <div className="grid grid-cols-4 sm:grid-cols-6 grid-rows-1 w-full justify-items-center text-xs text-gray-800 border-b-2 border-gray-500 " >
+                            <div key={i} className="grid grid-cols-4 sm:grid-cols-6 grid-rows-1 w-full justify-items-center text-xs text-gray-800 border-b-2 border-gray-500 " >
                                 
                                 <div>Afs {matchScore.autoArtifacts + matchScore.teleArtifacts} ({matchScore.autoArtifacts}|{matchScore.teleArtifacts}) </div>
                                 <div>Leave: {matchScore.autoLeave === 1 ? 'Yes' : 'No'}</div>

@@ -53,7 +53,7 @@ export default function Event({ eventCode }: { eventCode: string}) {
   const [showTeams, setShowTeams] = useState<boolean>(false);
 
   useEffect(() => {
-    fetch('/api/scout/events/' + eventCode)
+    fetch('/api/scout/events/' + eventCode, {cache: 'force-cache', next: { revalidate: 15 }})
     .then(res => res.json())
     .then(data => {
         setEvent(data);

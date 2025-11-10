@@ -1,11 +1,13 @@
+import { NextRequest, NextResponse } from 'next/server' 
 import connectDB from "@/lib/db"
 import MatchScore from "@/models/decode/MatchScore"
 
-export async function GET( request: Request, { params }: { params: Promise<{ eventCode: string, level: string, number: number, series: number }> } ): Promise<Response> {
-    const eventCode = (await params).eventCode
-    const level = (await params).level
-    const number = (await params).number
-    const series = (await params).series
+export async function GET( _req: NextRequest, ctx: RouteContext<'/api/scout/matches/[eventCode]/[level]/[number]/[series]/matchdata'> ) {
+    const params = await ctx.params;
+    const eventCode = params.eventCode
+    const level = params.level
+    const number = params.number
+    const series = params.series
 
     await connectDB();
     const data = await MatchScore.find({ eventCode: eventCode, matchLevel: level, matchNumber: number, matchSeries: series });
@@ -13,10 +15,5 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
         return new Response('No Match Data found', { status: 404 })
     }
 
-  return new Response(JSON.stringify(data), {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
+  return NextResponse.json(data)
 }

@@ -15,7 +15,7 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
     // Get All Team Details
     const teamapiPath = process.env.FTC_API_URL + '/2025/teams?eventCode=' + eventCode
     const teamresponse = await fetch(teamapiPath, {
-        headers: headers
+        headers: headers, cache: 'force-cache', next: { revalidate: 240 }
     })
     const teamdata = await teamresponse.json()
     //console.log(teamdata)
@@ -26,7 +26,7 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
     // Fetch Awards from API
     const apiPath = process.env.FTC_API_URL + '/2025/alliances/' + eventCode
     const response = await fetch(apiPath, {
-        headers: headers
+        headers: headers, cache: 'force-cache', next: { revalidate: 240 }
     })    
     const data = await response.json()
     const alliances = data.alliances

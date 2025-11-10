@@ -60,7 +60,7 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
     const [sortMatches, setSortMatches] = useState<boolean>(false);
 
     useEffect(() => {
-        fetch('/api/scout/matches/' + eventCode)
+        fetch('/api/scout/matches/' + eventCode, {cache: 'force-cache', next: { revalidate: 15 }})
         .then(res => res.json())
         .then(data => {
             data.sort((a: IScheduleMatch, b: IScheduleMatch) => a.matchNumber - b.matchNumber).sort((a: IScheduleMatch, b: IScheduleMatch) => b.matchLevel.localeCompare(a.matchLevel));

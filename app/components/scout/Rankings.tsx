@@ -32,7 +32,7 @@ const Rankings = ({ eventCode }: { eventCode: string}) => {
     const [rankingsLoaded, setRankingsLoaded] = useState<boolean>(false);
 
     useEffect(() => {
-        fetch('/api/scout/rankings/' + eventCode)
+        fetch('/api/scout/rankings/' + eventCode, {cache: 'force-cache', next: { revalidate: 15 }})
         .then(res => res.json())
         .then(data => {
             data.sort((a: IRankings, b: IRankings) => a.rank - b.rank);

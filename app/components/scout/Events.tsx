@@ -72,7 +72,7 @@ const Events = () => {
 
     // Fetch Events from API
     useEffect(() => {
-        fetch('/api/scout/events')
+        fetch('/api/scout/events', {cache: 'force-cache', next: { revalidate: 3600 }})
         .then(res => res.json())
         .then(data => {
             setEvents(data);

@@ -30,7 +30,7 @@ const Awards = ({ eventCode }: { eventCode: string}) => {
     const [awardsLoaded, setAwardsLoaded] = useState<boolean>(false);
 
     useEffect(() => {
-        fetch('/api/scout/awards/' + eventCode)
+        fetch('/api/scout/awards/' + eventCode, {cache: 'force-cache', next: { revalidate: 15 }})
         .then(res => res.json())
         .then(data => {
             data.sort((a: IAwards, b: IAwards) => a.series - b.series).sort((a: IAwards, b: IAwards) => a.sortId - b.sortId);

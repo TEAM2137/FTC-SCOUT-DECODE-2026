@@ -54,7 +54,7 @@ export default function Event({ eventCode, display }: { eventCode: string, displ
   
 
   useEffect(() => {
-    fetch('/api/scout/events/' + eventCode)
+    fetch('/api/scout/events/' + eventCode, {cache: 'force-cache', next: { revalidate: 15 }})
     .then(res => res.json())
     .then(data => {
         setEvent(data);

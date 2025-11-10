@@ -1,11 +1,13 @@
+import { NextRequest, NextResponse } from 'next/server' 
 import connectDB from "@/lib/db"
 import ScheduleMatch from "@/models/ftc/ScheduleMatch"
 
-export async function GET( request: Request, { params }: { params: Promise<{ eventCode: string, level: string, number: number, series: number }> } ): Promise<Response> {
-    const eventCode = (await params).eventCode
-    const level = (await params).level
-    const number = (await params).number
-    const series = (await params).series
+export async function GET( _req: NextRequest, ctx: RouteContext<'/api/scout/matches/[eventCode]/[level]/[number]/[series]'> ) {
+    const params = await ctx.params;
+    const eventCode = params.eventCode
+    const level = params.level
+    const number = params.number
+    const series = params.series
 
     await connectDB();
     const data = await ScheduleMatch.findOne({ eventCode: eventCode, matchLevel: level, matchNumber: number, matchSeries: series });
@@ -13,10 +15,5 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
         return new Response('No Matches found', { status: 404 })
     }
 
-  return new Response(JSON.stringify(data), {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
+  return NextResponse.json(data)
 }

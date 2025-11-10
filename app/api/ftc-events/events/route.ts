@@ -15,7 +15,7 @@ export async function GET() {
   }
   // Fetch Events from API
   const response = await fetch(apiPath, {
-    headers: headers
+    headers: headers, cache: 'force-cache', next: { revalidate: 3600 }
   })
   const data = await response.json()
 
