@@ -158,7 +158,7 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
             
         {unplayedquals.map((match, i: number) => (
         <Link key={i} href={'/scout/event/'+eventCode+'/schedule/match/'+match.matchLevel+'/'+match.matchNumber+'/'+match.matchSeries}>
-            <div key={i} className="grid grid-cols-[70px_60px_90px_60px_70px] grid-rows-[20px_30px_30px]  p-1 m-1 rounded-lg bg-slate-600 hover:bg-slate-400">
+            <div key={i} className="grid grid-cols-[80px_60px_90px_60px_80px] grid-rows-[20px_30px_30px]  p-1 m-1 rounded-lg bg-slate-600 hover:bg-slate-400">
                 <div className="col-start-1 row-start-1 col-span-5 font-bold text-left text-sm text-white pl-2">{match.description}</div>
                 
                 <div className="col-start-2 row-start-2 font-bold text-center text-lg  justify-center place-items-center  bg-red-200">
@@ -208,7 +208,7 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
             
         {unplayedplayoffs.map((match, i: number) => (
         <Link key={i} href={'/scout/event/'+eventCode+'/schedule/match/'+match.matchLevel+'/'+match.matchNumber+'/'+match.matchSeries}>
-            <div key={i} className="grid grid-cols-[70px_60px_90px_60px_70px] grid-rows-[20px_30px_30px]  p-1 m-1 rounded-lg bg-slate-600 hover:bg-slate-400">
+            <div key={i} className="grid grid-cols-[80px_60px_90px_60px_80px] grid-rows-[20px_30px_30px]  p-1 m-1 rounded-lg bg-slate-600 hover:bg-slate-400">
                 <div className="col-start-1 row-start-1 col-span-5 font-bold text-left text-sm text-white pl-2">{match.description}</div>
                 
                 <div className="col-start-2 row-start-2 font-bold text-center text-lg  justify-center place-items-center  bg-red-200">
@@ -258,7 +258,7 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
             
             {playedplayoffs.map((match, i: number) => (
             <Link key={i} href={'/scout/event/'+eventCode+'/schedule/match/'+match.matchLevel+'/'+match.matchNumber+'/'+match.matchSeries}>
-                <div key={i} className="grid grid-cols-[70px_60px_90px_60px_70px] grid-rows-[20px_30px_30px]  p-1 m-1 rounded-lg bg-slate-600 hover:bg-slate-400">
+                <div key={i} className="grid grid-cols-[80px_60px_90px_60px_80px] grid-rows-[20px_30px_30px]  p-1 m-1 rounded-lg bg-slate-600 hover:bg-slate-400">
                     <div className="col-start-1 row-start-1 col-span-5 font-bold text-left text-sm text-white pl-2">{match.description}</div>
                     
                     <div className="col-start-2 row-start-2 font-bold text-center text-lg  justify-center place-items-center  bg-red-200">
@@ -422,7 +422,7 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
             
             {playedquals.map((match, i: number) => (
             <Link key={i} href={'/scout/event/'+eventCode+'/schedule/match/'+match.matchLevel+'/'+match.matchNumber+'/'+match.matchSeries}>
-                <div key={i} className="grid grid-cols-[70px_60px_90px_60px_70px] grid-rows-[20px_30px_30px]  p-1 m-1 rounded-lg bg-slate-600 hover:bg-slate-400">
+                <div key={i} className="grid grid-cols-[80px_60px_90px_60px_80px] grid-rows-[20px_30px_30px] p-1 m-1 rounded-lg bg-slate-600 hover:bg-slate-400">
                     <div className="col-start-1 row-start-1 col-span-5 font-bold text-left text-sm text-white pl-2">{match.description}</div>
                     
                     <div className="col-start-2 row-start-2 font-bold text-center text-lg  justify-center place-items-center  bg-red-200">
