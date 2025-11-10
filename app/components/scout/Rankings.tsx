@@ -3,8 +3,6 @@
 import { useState, useEffect } from 'react';
 import Loading from '../ui/Loading';
 
-
-
 interface IRankings {
     eventCode: string,
     rank: number,
@@ -32,7 +30,7 @@ const Rankings = ({ eventCode }: { eventCode: string}) => {
     const [rankingsLoaded, setRankingsLoaded] = useState<boolean>(false);
 
     useEffect(() => {
-        fetch('/api/scout/rankings/' + eventCode, {cache: 'force-cache', next: { revalidate: 15 }})
+        fetch('/api/scout/rankings/' + eventCode, {cache: 'force-cache', next: { revalidate: 60 }})
         .then(res => res.json())
         .then(data => {
             data.sort((a: IRankings, b: IRankings) => a.rank - b.rank);
@@ -45,7 +43,7 @@ const Rankings = ({ eventCode }: { eventCode: string}) => {
   return (
     <div className="my-4">
 
-{!rankingsLoaded &&  <Loading /> }
+{!rankingsLoaded &&  <Loading mssg="Loading Rankings" /> }
 
 {rankings.length > 0 &&
 

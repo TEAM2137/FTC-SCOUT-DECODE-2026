@@ -1,3 +1,4 @@
+
 import connectDB from "@/lib/db"
 import Alliances from "@/models/ftc/Alliances"
 
@@ -19,8 +20,6 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
     })
     const teamdata = await teamresponse.json()
     //console.log(teamdata)
-
-
 
 
     // Fetch Awards from API

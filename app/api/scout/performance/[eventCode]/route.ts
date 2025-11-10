@@ -9,7 +9,19 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
         return new Response('Event not found', { status: 404 })
     }
 
-  return new Response(JSON.stringify(data), {
+    const performanceData = []
+
+    // Save Event Team Summaries
+    for (let i = 0; i < data.teamList.length; i++ ) {
+        const team = data.teamList[i];
+        
+        const res = await fetch (process.env.THIS_SERVER_URL + '/api/scout/performance/' + eventCode + '/' + team.teamNumber, {cache: 'force-cache', next: { revalidate: 300 }});
+        const resData = await res.json();
+        performanceData.push(resData);
+
+    }
+
+  return new Response(JSON.stringify(performanceData), {
     status: 200,
     headers: {
       'Content-Type': 'application/json'

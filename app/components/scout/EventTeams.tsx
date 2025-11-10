@@ -34,18 +34,6 @@ interface IEventItem
     ],
 }
 
-function returnDate(date: string) {
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-    const dateObj = new Date(date);
-    const month = months[dateObj.getMonth()];
-    const day = days[dateObj.getDay()];
-    const dayNumber = dateObj.getDate();
-    const year = dateObj.getFullYear();
-    return day + " (" +month + " " + dayNumber + ", " + year + ")";
-
-}
 
 export default function Event({ eventCode }: { eventCode: string}) {
   const [event, setEvent] = useState<IEventItem>();
@@ -53,7 +41,7 @@ export default function Event({ eventCode }: { eventCode: string}) {
   const [showTeams, setShowTeams] = useState<boolean>(false);
 
   useEffect(() => {
-    fetch('/api/scout/events/' + eventCode, {cache: 'force-cache', next: { revalidate: 15 }})
+    fetch('/api/scout/events/' + eventCode, {cache: 'force-cache', next: { revalidate: 3600 }})
     .then(res => res.json())
     .then(data => {
         setEvent(data);
@@ -64,8 +52,6 @@ export default function Event({ eventCode }: { eventCode: string}) {
 
 
   return (
-    
-
     <div >
         {!eventLoaded &&  <Loading /> }
 

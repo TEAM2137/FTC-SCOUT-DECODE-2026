@@ -1,5 +1,4 @@
 
-
 import connectDB from "@/lib/db"
 import Event from "@/models/ftc/Event"
 
@@ -15,7 +14,7 @@ export async function GET() {
   }
   // Fetch Events from API
   const response = await fetch(apiPath, {
-    headers: headers, cache: 'force-cache', next: { revalidate: 3600 }
+    headers: headers, cache: 'force-cache', next: { revalidate: 86400 }
   })
   const data = await response.json()
 

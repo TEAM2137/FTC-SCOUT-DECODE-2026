@@ -23,8 +23,9 @@ export default function Page({ params, }: { params: Promise<{ eventCode: string,
           </div>
       </div>
        
-    <Event eventCode={eventCode} display="small" />
-    <p className="text-xs sm:text-lg"> Scouting {level === 'QUALIFICATION' ? 'Qualification' : 'Elimination'} Match {number} | Team {team}</p>   
+    
+    <p className="text-xs sm:text-lg"> Scouting {level === 'QUALIFICATION' ? 'Qualification' : 'Elimination'} Match {number}</p>
+    <p className="text-lg sm:text-xl">Team {team}</p>  
       
 
     <Record eventCode={eventCode} level={level} number={number} series={series} team={team} />

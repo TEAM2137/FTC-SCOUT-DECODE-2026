@@ -1,6 +1,5 @@
 
 
-
 import connectDB from "@/lib/db"
 import Rankings from "@/models/ftc/Rankings"
 

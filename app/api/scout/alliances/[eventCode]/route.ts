@@ -1,3 +1,4 @@
+
 import connectDB from "@/lib/db"
 import Alliances from "@/models/ftc/Alliances"
 

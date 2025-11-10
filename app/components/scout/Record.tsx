@@ -1,6 +1,8 @@
 'use client'
+
 import { useState, useEffect } from 'react';
 import { saveMatchScore } from '@/lib/saveMatchScores';
+import { saveEventTeamSummaries } from '@/lib/saveEventTeamSummaries';
 import Link from 'next/link';
 
 interface IMatchScore
@@ -117,6 +119,16 @@ useEffect(() => {
           } catch (error) {
             setSaveRslt(true);
             setSaveRsltMsg('Error Saving Match Score');
+            console.log(error);
+          }
+          try {
+            const saveSummary = await saveEventTeamSummaries(eventCode, team);
+            if (saveSummary) { 
+              console.log('Team Summaries Saved!');
+            } else {
+              console.log('Team Summaries NOT Saved!');
+            }
+          } catch (error) {
             console.log(error);
           }
       }
