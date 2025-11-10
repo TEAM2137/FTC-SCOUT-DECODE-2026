@@ -231,8 +231,8 @@ export async function saveEventTeamSummaries(eventCode: string, teamNumber: numb
 
 
 
-        if (newMatchTeamSummary.teleBase === 'FULL' && newMatchTeamSummary.scoutTeleBaseFull === 0) { newMatchTeamSummary.scoutTeleBaseFull = 10; }
-        if (newMatchTeamSummary.teleBase === 'PARTIAL' && newMatchTeamSummary.scoutTeleBasePartial === 0) { newMatchTeamSummary.scoutTeleBasePartial = 5; }
+        //if (newMatchTeamSummary.teleBase === 'FULL' && newMatchTeamSummary.scoutTeleBaseFull === 0) { newMatchTeamSummary.scoutTeleBaseFull = 10; }
+        //if (newMatchTeamSummary.teleBase === 'PARTIAL' && newMatchTeamSummary.scoutTeleBasePartial === 0) { newMatchTeamSummary.scoutTeleBasePartial = 5; }
 
 
 
