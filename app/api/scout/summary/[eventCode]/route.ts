@@ -21,6 +21,7 @@ interface IPerformanceSummary {
     totalArtifacts: number,
     scoutAutoLeave: number,
     scoutTeleBase: number,
+    scoutedMatches: number,
 }
 
 interface IMatchTeamSummary
@@ -92,6 +93,7 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
         let scoutAutoLeave = 0;
         let scoutTeleBasePartial = 0;
         let scoutTeleBaseFull = 0;
+        let scoutedMatches = 0;
 
 
 
@@ -133,6 +135,7 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
                 scoutAutoLeave += match.scoutAutoLeave;
                 scoutTeleBasePartial += match.scoutTeleBasePartial;
                 scoutTeleBaseFull += match.scoutTeleBaseFull;
+                scoutedMatches += match.scouted;
             }
         }
 
@@ -149,14 +152,15 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
             allianceAuto: Math.floor(allianceAuto / numerator),
             refAuto: (refAuto / numerator),
             refBase: (refBase / numerator),
-            autoArtifacts: (autoArtifacts / numerator),
-            teleArtifacts: (teleArtifacts / numerator),
-            doubleBaseRaise: (doubleBaseRaise / numerator),
-            doubleBaseLift: (doubleBaseLift / numerator),
-            score: (score / numerator),
-            totalArtifacts: (totalArtifacts / numerator),
-            scoutAutoLeave: (scoutAutoLeave / numerator),
-            scoutTeleBase: ((scoutTeleBasePartial + scoutTeleBaseFull) / numerator),
+            autoArtifacts: (autoArtifacts / scoutedMatches),
+            teleArtifacts: (teleArtifacts / scoutedMatches),
+            doubleBaseRaise: (doubleBaseRaise / scoutedMatches),
+            doubleBaseLift: (doubleBaseLift / scoutedMatches),
+            score: (score / scoutedMatches),
+            totalArtifacts: (totalArtifacts / scoutedMatches),
+            scoutAutoLeave: (scoutAutoLeave / scoutedMatches),
+            scoutTeleBase: ((scoutTeleBasePartial + scoutTeleBaseFull) / scoutedMatches),
+            scoutedMatches: scoutedMatches,
         }
 
         performanceSummary.push(newPerformanceSummary);
