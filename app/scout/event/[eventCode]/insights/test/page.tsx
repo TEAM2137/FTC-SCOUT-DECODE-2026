@@ -1,6 +1,6 @@
 'use client'
 import Event from '@/app/components/scout/Event'
-
+import { TestChart } from '@/app/components/scout/TestChart'
 import { use } from 'react'
 
 
@@ -38,7 +38,13 @@ const Page = ({ params, }: { params: Promise<{ eventCode: string }>}) => {
 
       <h1 className='text-2xl font-bold my-2'>Insights</h1>
 
-
+      <div className='flex flex-row flex-wrap w-full'>
+        {TeatData.map((team, index) => (
+          <div key={index} className="w-2/2 sm:w-1/2 md:w-1/3 lg:w-1/4 p-2">
+            <TestChart teamName={team.name} teamNumber={team.number} teamValue={team.value} teamAuto={team.auto} teamBase={team.base} teamArtifacts={team.artifacts} />
+          </div>
+        ))}
+      </div>
 
     </div>
   )

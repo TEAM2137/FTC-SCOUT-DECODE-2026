@@ -17,8 +17,10 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
         
         const res = await fetch (process.env.THIS_SERVER_URL + '/api/scout/performance/' + eventCode + '/' + team.teamNumber, {cache: 'force-cache', next: { revalidate: 300 }});
         const resData = await res.json();
-        performanceData.push(resData);
-
+        for (let i = 0; i < resData.length; i++) {
+          const record = resData[i];
+          performanceData.push(record);
+        }
     }
 
   return new Response(JSON.stringify(performanceData), {

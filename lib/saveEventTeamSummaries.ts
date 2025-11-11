@@ -87,6 +87,7 @@ interface IMatchTeamSummary
     scoutAutoLeave: number,
     scoutTeleBasePartial: number,
     scoutTeleBaseFull: number,
+    scouted: number,
 }
 
 export async function saveEventTeamSummaries(eventCode: string, teamNumber: number) {
@@ -140,6 +141,7 @@ export async function saveEventTeamSummaries(eventCode: string, teamNumber: numb
             scoutAutoLeave: 0,
             scoutTeleBasePartial: 0,
             scoutTeleBaseFull: 0,
+            scouted: 0,
         }
 
         
@@ -193,6 +195,7 @@ export async function saveEventTeamSummaries(eventCode: string, teamNumber: numb
             newMatchTeamSummary.scoutAutoLeave = currentMatchScore[0].autoLeave * 3;
             newMatchTeamSummary.scoutTeleBasePartial = currentMatchScore[0].teleBasePartial * 5;
             newMatchTeamSummary.scoutTeleBaseFull = currentMatchScore[0].teleBaseFull * 10;
+            newMatchTeamSummary.scouted = 1;
         }
         if (currentMatchScore.length > 1) {
             const ARRautoArtifacts: number[] = [];
@@ -227,6 +230,7 @@ export async function saveEventTeamSummaries(eventCode: string, teamNumber: numb
             newMatchTeamSummary.scoutAutoLeave = Math.ceil(ARRscoutAutoLeave.reduce((a, b) => a + b, 0) / ARRscoutAutoLeave.length);
             newMatchTeamSummary.scoutTeleBasePartial = Math.ceil(ARRscoutTeleBasePartial.reduce((a, b) => a + b, 0) / ARRscoutTeleBasePartial.length);
             newMatchTeamSummary.scoutTeleBaseFull = Math.ceil(ARRscoutTeleBaseFull.reduce((a, b) => a + b, 0) / ARRscoutTeleBaseFull.length);
+            newMatchTeamSummary.scouted = 1;
         }
 
 
