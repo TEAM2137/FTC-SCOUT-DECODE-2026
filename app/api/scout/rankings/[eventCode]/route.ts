@@ -14,6 +14,17 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
         return new Response('Event not found', { status: 404 })
     }
 
+    //filter duplicates
+    const rankings = [];
+    const teams = [];
+    for (let i = 0; i < data.length; i++ ) {
+        const ranking = data[i];
+        teams.push(ranking.teamNumber);
+        if (!teams.includes(ranking.teamNumber)) {
+            rankings.push(ranking);
+        }
+    }
+
   return new Response(JSON.stringify(data), {
     status: 200,
     headers: {
