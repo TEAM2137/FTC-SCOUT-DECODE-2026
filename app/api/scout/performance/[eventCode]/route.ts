@@ -15,7 +15,7 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
     for (let i = 0; i < data.teamList.length; i++ ) {
         const team = data.teamList[i];
         
-        const res = await fetch (process.env.THIS_SERVER_URL + '/api/scout/performance/' + eventCode + '/' + team.teamNumber, {cache: 'force-cache', next: { revalidate: 300 }});
+        const res = await fetch (process.env.THIS_SERVER_URL + '/api/scout/performance/' + eventCode + '/' + team.teamNumber, {cache: 'force-cache', next: { revalidate: 15 }});
         const resData = await res.json();
         for (let i = 0; i < resData.length; i++) {
           const record = resData[i];

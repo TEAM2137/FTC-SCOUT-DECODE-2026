@@ -66,7 +66,7 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
 
     const performanceSummary: IPerformanceSummary[] = []
 
-    const res = await fetch (process.env.THIS_SERVER_URL + '/api/scout/performance/' + eventCode, {cache: 'force-cache', next: { revalidate: 60 }});
+    const res = await fetch (process.env.THIS_SERVER_URL + '/api/scout/performance/' + eventCode, {cache: 'force-cache', next: { revalidate: 120 }});
     const resData = await res.json();
 
     // Save Event Team Summaries

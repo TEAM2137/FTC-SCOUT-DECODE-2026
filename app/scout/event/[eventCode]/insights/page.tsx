@@ -1,5 +1,6 @@
 'use client'
 import Event from '@/app/components/scout/Event'
+import SummaryGraph from '@/app/components/scout/SummaryGraph'
 
 import { use } from 'react'
 
@@ -38,7 +39,7 @@ const Page = ({ params, }: { params: Promise<{ eventCode: string }>}) => {
 
       <h1 className='text-2xl font-bold my-2'>Insights</h1>
 
-
+      <SummaryGraph eventCode={eventCode} />
 
     </div>
   )
