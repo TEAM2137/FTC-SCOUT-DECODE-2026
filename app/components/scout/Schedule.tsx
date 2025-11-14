@@ -191,7 +191,25 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
 {!scheduleLoaded &&  <Loading /> }
 
 {scheduleTeams.length > 0 &&
-    <div className="flex flex-row w-full py-2 px-5 lg:px-7 justify-end gap-2">
+    <div className="flex flex-row flex-wrap w-full py-2 px-5 lg:px-7 justify-end gap-2">
+
+    
+
+    {playedquals.length > 0 && 
+
+    <Link href={'/scout/event/'+eventCode+'/insights'}>
+    <Button variant="outline" className='bg-primary text-primary-foreground'>
+        <ChartNoAxesCombined />  Team Insights
+    </Button></Link>
+    }
+    {scheduleTeams.length > 0 &&
+    <Link href={'/scout/event/'+eventCode+'/alliance'}>
+    <Button variant="outline" className='bg-primary text-primary-foreground'>
+        <Speech />  Alliance Selector
+    </Button></Link>
+
+    }
+
 
     <Select onValueChange={(value: string) => setShowMatches(Number(value))}>
       <SelectTrigger className="w-[250px]">
@@ -206,21 +224,6 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
         </SelectGroup>
       </SelectContent>
     </Select>
-
-    {playedquals.length > 0 && 
-
-    <Link href={'/scout/event/'+eventCode+'/insights'}>
-    <Button variant="outline" className='bg-primary text-primary-foreground'>
-        <ChartNoAxesCombined />  Team Insights
-    </Button></Link>
-    }
-    {scheduleTeams.length > 0 &&
-    <Link href={'/scout/event/'+eventCode+'/insights'}>
-    <Button variant="outline" className='bg-primary text-primary-foreground'>
-        <Speech />  Alliance Selector
-    </Button></Link>
-
-    }
 
     </div>
 }

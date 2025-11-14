@@ -27,9 +27,9 @@ const Page = ({ params, }: { params: Promise<{ eventCode: string }>}) => {
         </div>
 
 
-      <h1 className='text-2xl font-bold my-2'>Insights</h1>
+      <h1 className='text-2xl font-bold my-2'>Alliance Selection Tool</h1>
 
-      <SummaryGraph eventCode={eventCode} />
+      
 
     </div>
   )

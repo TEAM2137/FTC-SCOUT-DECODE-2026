@@ -24,33 +24,27 @@ interface IPerformanceSummary {
     scoutedMatches: number,
 }
 
-interface IMatchTeamSummary
+interface IRankings 
 {
+    _id: string,
+    _v: number,
     eventCode: string,
-    matchLevel: string,
-    matchNumber: number,
-    matchSeries: number,
+    rank: number,
     teamNumber: number,
     teamName: string,
-    alliance: string,
-    station: string,
-    allianceWon: number,
-    allianceLost: number,
-    allianceTied: number,
-    allianceAuto: number,
-    allianceFinal: number,
-    allianceFoul: number,
-    autoLeave: number,
-    teleBase: string,
-    autoArtifacts: number,
-    teleArtifacts: number,
-    doubleBaseRaise: number,
-    doubleBaseLift: number,
-    score: number,
-    totalArtifacts: number,
-    scoutAutoLeave: number,
-    scoutTeleBasePartial: number,
-    scoutTeleBaseFull: number,
+    sortOrder1: number,
+    sortOrder2: number,
+    sortOrder3: number,
+    sortOrder4: number,
+    sortOrder5: number,
+    sortOrder6: number,
+    wins: number,
+    losses: number,
+    ties: number,
+    qualAverage: number,
+    dq: number,
+    matchesPlayed: number,
+    matchesCounted: number,
 }
 
 export async function GET( request: Request, { params }: { params: Promise<{ eventCode: string, }> } ) {
@@ -67,7 +61,10 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
     const performanceSummary: IPerformanceSummary[] = []
 
     const res = await fetch (process.env.THIS_SERVER_URL + '/api/scout/performance/' + eventCode, {cache: 'force-cache', next: { revalidate: 120 }});
-    const resData = await res.json();
+    const perfData = await res.json();
+
+    const resRankings = await fetch (process.env.THIS_SERVER_URL + '/api/scout/rankings/' + eventCode, {cache: 'force-cache', next: { revalidate: 120 }});
+    const rankData = await resRankings.json();
 
     // Save Event Team Summaries
     for (let i = 0; i < data.teamList.length; i++ ) {
@@ -97,9 +94,8 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
 
 
 
-        for (let j = 0; j < resData.length; j++) {
-            const record = resData[j]
-
+        for (let j = 0; j < perfData.length; j++) {
+            const record = perfData[j]
             if (record.teamNumber === team.teamNumber && record.matchLevel === 'QUALIFICATION') {
                 tempTeam.push(record)
             }
@@ -139,6 +135,23 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
             }
         }
 
+        const ranking = rankData.filter((rank: IRankings) => rank.teamNumber === team.teamNumber);
+        const rankNumber = ranking[0].rank;
+        const rankingWins = ranking[0].wins;
+        const rankingLosses = ranking[0].losses;
+        const rankingTies = ranking[0].ties;
+        const rankingMatchesCounted = ranking[0].matchesCounted;
+        const rankingMatchesPlayed = ranking[0].matchesPlayed;
+        const rankingQualAverage = ranking[0].qualAverage;
+        const rankingDQ = ranking[0].dq;
+        const rankingSortOrder1 = ranking[0].sortOrder1;
+        const rankingSortOrder2 = ranking[0].sortOrder2;
+        const rankingSortOrder3 = ranking[0].sortOrder3;
+        const rankingSortOrder4 = ranking[0].sortOrder4;
+        const rankingSortOrder5 = ranking[0].sortOrder5;
+        const rankingSortOrder6 = ranking[0].sortOrder6;
+
+
         const numerator = tempTeam.length
 
         const newPerformanceSummary = {
@@ -161,6 +174,20 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
             scoutAutoLeave: (scoutAutoLeave / scoutedMatches),
             scoutTeleBase: ((scoutTeleBasePartial + scoutTeleBaseFull) / scoutedMatches),
             scoutedMatches: scoutedMatches,
+            rRank: rankNumber,
+            rWins: rankingWins,
+            rLosses: rankingLosses,
+            rTies: rankingTies,
+            rMatchesCounted: rankingMatchesCounted,
+            rMatchesPlayed: rankingMatchesPlayed,
+            rQualAverage: rankingQualAverage,
+            rDQ: rankingDQ,
+            rRankPoints: rankingSortOrder1,
+            rMatchPoints: rankingSortOrder2,
+            rBasePoints: rankingSortOrder3,
+            rAutoPoints: rankingSortOrder4,
+            rSortOrder5: rankingSortOrder5,
+            rHighScore: rankingSortOrder6,
         }
 
         performanceSummary.push(newPerformanceSummary);

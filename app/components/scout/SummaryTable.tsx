@@ -127,7 +127,7 @@ const SummaryGraph = ({ eventCode }: { eventCode: string}) => {
 
 
     useEffect(() => {
-        fetch('/api/scout/summary/' + eventCode)
+        fetch('/api/scout/summary/' + eventCode, {cache: 'force-cache', next: { revalidate: 15 }})
         .then(res => res.json())
         .then(data => {
             data.sort((a: IPerformanceSummary, b: IPerformanceSummary) => a.rRank - b.rRank);
