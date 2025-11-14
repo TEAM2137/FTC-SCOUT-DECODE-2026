@@ -85,7 +85,7 @@ interface IRankings
     matchesCounted: number,
 }
 
-const SummaryGraph = ({ eventCode }: { eventCode: string}) => {
+const SummaryTable = ({ eventCode }: { eventCode: string}) => {
     const [performanceData, setPerformanceData] = useState<IPerformanceSummary[]>([]);
     const [sortedPD, setSortedPD] = useState<IPerformanceSummary[]>([]);
     const [reload, setReload] = useState<boolean>(false);
@@ -220,4 +220,4 @@ const SummaryGraph = ({ eventCode }: { eventCode: string}) => {
   )
 }
 
-export default SummaryGraph
+export default SummaryTable

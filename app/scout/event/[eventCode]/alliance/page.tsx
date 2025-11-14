@@ -2,10 +2,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import Event from '@/app/components/scout/Event'
-import SummaryGraph from '@/app/components/scout/SummaryGraph'
+
 
 import { use } from 'react'
 
+import AllianceSelector from '@/app/components/scout/AllianceSelector'
 
 
 const Page = ({ params, }: { params: Promise<{ eventCode: string }>}) => {
@@ -29,7 +30,7 @@ const Page = ({ params, }: { params: Promise<{ eventCode: string }>}) => {
 
       <h1 className='text-2xl font-bold my-2'>Alliance Selection Tool</h1>
 
-      
+      <AllianceSelector eventCode={eventCode} />
 
     </div>
   )
