@@ -293,22 +293,22 @@ const AllianceSelector = ({ eventCode }: { eventCode: string}) => {
                    <span className="font-bold" >{team.teamNumber}</span>
                 </div>
                 <div className="col-start-3 text-center text-sm bg-green-950">{Math.floor((team.totalArtifacts*3)+team.scoutAutoLeave+team.scoutTeleBase)}</div>
-                <div className="col-start-4 text-center text-sm">{Math.floor(team.totalArtifacts)}</div>
-                <div className="col-start-5 text-center text-sm">{Math.floor(team.scoutAutoLeave)}</div>
-                <div className="col-start-6 text-center text-sm">{Math.floor(team.scoutTeleBase)}</div>
-                <div className="col-start-7 text-center text-sm bg-blue-950">{team.rRankPoints}</div>
-                <div className="col-start-8 text-center text-sm bg-red-950">{team.rMatchPoints}</div>
-                <div className="col-start-9 text-center text-sm">{team.rAutoPoints}</div>
-                <div className="col-start-10 text-center text-sm">{team.rBasePoints}</div>
+                <div className="col-start-4 text-center text-sm">{Math.round(team.totalArtifacts)}</div>
+                <div className="col-start-5 text-center text-sm">{Math.round(team.scoutAutoLeave)}</div>
+                <div className="col-start-6 text-center text-sm">{Math.round(team.scoutTeleBase)}</div>
+                <div className="col-start-7 text-center text-sm bg-blue-950">{Math.round(team.rRankPoints * 10)/10}</div>
+                <div className="col-start-8 text-center text-sm bg-red-950">{Math.round(team.rMatchPoints)}</div>
+                <div className="col-start-9 text-center text-sm">{Math.round(team.rAutoPoints)}</div>
+                <div className="col-start-10 text-center text-sm">{Math.round(team.rBasePoints)}</div>
             </div>
             </button>
             ))}
 
 
         </CardContent>
-        <CardFooter className="flex-row gap-2 text-sm place-items-start justify-items-start">
-        
-        <div className="flex items-center gap-2 leading-none font-medium text-xs m-auto w-1/3">
+        <CardFooter className="flex-row gap-2 text-sm place-items-start">
+        <div className="w-[375px] flex flex-row gap-1 text-xs justify-center">
+        <div className="flex gap-2  font-medium text-xs  w-1/3">
         <div className="flex flex-col">
                 <div className="p-1  text-right text-sm bg-green-950">Average Scouted Score</div>
                 <div className="p-1  text-right text-sm font-light">Average Artifacts</div>
@@ -318,7 +318,7 @@ const AllianceSelector = ({ eventCode }: { eventCode: string}) => {
         </div>
 
 
-        <div className="flex items-center gap-2 leading-none font-medium text-xs m-auto w-fill">
+        <div className="flex gap-2  font-medium text-xs  w-fill">
         <div className="flex flex-col">
                 <div className="p-1 text-center text-sm bg-blue-950">Ranking Points<br/>&nbsp;</div>
                 <div className="p-1  text-right text-sm font-light">&nbsp;</div>
@@ -328,7 +328,7 @@ const AllianceSelector = ({ eventCode }: { eventCode: string}) => {
         </div>
         </div>
 
-        <div className="flex items-center gap-2 leading-none font-medium text-xs m-auto w-1/3">
+        <div className="flex gap-2  font-medium text-xs  w-1/3">
         <div className="flex flex-col">
                 <div className="p-1  text-left text-sm bg-red-950">Alliance Match Points</div>
                 <div className="p-1  text-left text-sm font-light">Alliance Auto</div>
@@ -336,7 +336,7 @@ const AllianceSelector = ({ eventCode }: { eventCode: string}) => {
                 <div className="p-1  text-left text-sm font-light">&nbsp;</div>
         </div>
         </div>
-
+        </div>
         </CardFooter>
         </Card>
      }
