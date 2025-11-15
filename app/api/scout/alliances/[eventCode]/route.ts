@@ -21,7 +21,7 @@ interface IAlliance
 export async function GET( request: Request, { params }: { params: Promise<{ eventCode: string, }> } ) {
     const eventCode = (await params).eventCode
 
-    const update = await fetch(process.env.THIS_SERVER_URL + '/api/ftc-events/alliances/' + eventCode);
+    const update = await fetch(process.env.THIS_SERVER_URL + '/api/ftc-events/alliances/' + eventCode, {cache: 'force-cache', next: { revalidate: 15 }});
     const updateStatus = await update.json();
     console.log(updateStatus);
 

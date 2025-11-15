@@ -52,7 +52,7 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
     // Fetch Qualifier Scores from API
 try{
     const qsresponse = await fetch(apiScoresQualifierPath, {
-        headers: headers, cache: 'force-cache', next: { revalidate: 120 }
+        headers: headers, cache: 'force-cache', next: { revalidate: 30 }
     })    
     const qsdata = await qsresponse.json()
     const qualifierScores = qsdata.matchScores
@@ -106,7 +106,7 @@ try{
 try{
     // Fetch Playoff Scores from API
     const psresponse = await fetch(apiScoresPlayoffPath, {
-        headers: headers , cache: 'force-cache', next: { revalidate: 120 }
+        headers: headers , cache: 'force-cache', next: { revalidate: 30 }
     })    
     const psdata = await psresponse.json()
     const playoffScores = psdata.matchScores
@@ -167,7 +167,7 @@ try{
 try {
     // Fetch Hybrid QualifierMatch Schedule from API
     const scheduleQualifierResponse = await fetch(apiScheduleQualifierPath, {
-        headers: headers, cache: 'force-cache', next: { revalidate: 120 }
+        headers: headers, cache: 'force-cache', next: { revalidate: 30 }
     })
     const scheduleQualifierData = await scheduleQualifierResponse.json()
     const scheduleQualifierSchedule = scheduleQualifierData.schedule
@@ -255,7 +255,7 @@ try {
 try {
     // Fetch Hybrid PlayoffMatch Schedule from API
     const schedulePlayoffResponse = await fetch(apiSchedulePlayoffPath, {
-        headers: headers, cache: 'force-cache', next: { revalidate: 120 }
+        headers: headers, cache: 'force-cache', next: { revalidate: 30 }
     })
     const schedulePlayoffData = await schedulePlayoffResponse.json()
     const schedulePlayoffSchedule = schedulePlayoffData.schedule

@@ -18,7 +18,7 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
     }
     // Fetch Events from API
     const response = await fetch(apiPath, {
-        headers: headers
+        headers: headers, cache: 'force-cache', next: { revalidate: 30 }
     })
     const data = await response.json()
     const rankings = data.rankings

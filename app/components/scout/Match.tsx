@@ -90,7 +90,7 @@ const Match = ({ eventCode, level, number, series }: { eventCode: string, level:
     const [matchLoaded, setMatchLoaded] = useState<boolean>(false);
 
     useEffect(() => {
-        fetch('/api/scout/matches/' + eventCode + '/' + level + '/' + number + '/' + series, {cache: 'force-cache', next: { revalidate: 15 }})
+        fetch('/api/scout/matches/' + eventCode + '/' + level + '/' + number + '/' + series)
         .then(res => res.json())
         .then(data => {
             setMatch(data);
@@ -135,7 +135,7 @@ const Match = ({ eventCode, level, number, series }: { eventCode: string, level:
                     </div>
                     {match.teams.filter((team) => team.station === 'Red1').map((team, i: number) => (
                     <div key={i+'team'} className="grid grid-rows-[30px_1fr]  m-1 rounded-lg bg-blue-300 hover:bg-blue-200">
-                        <div  className="px-2 text-left text-xl font-bold text-gray-800 rounded-l-lg" >
+                        <div  className="px-2 text-left text-sm font-bold text-gray-800 rounded-l-lg" >
                             {team.teamNumber} - {team.teamName}
                         </div>
                         <div  className="p-2 justify-items-center place-content-center text-center text-xl font-bold text-gray-800 rounded-l-lg" >
@@ -159,7 +159,7 @@ const Match = ({ eventCode, level, number, series }: { eventCode: string, level:
                     ))}
                     {match.teams.filter((team) => team.station === 'Red2').map((team, i: number) => (
                     <div key={i+'team'} className="grid grid-rows-[30px_1fr]  m-1 rounded-lg bg-blue-300 hover:bg-blue-200">
-                        <div  className="px-2 text-left text-xl font-bold text-gray-800 rounded-l-lg" >
+                        <div  className="px-2 text-left text-sm font-bold text-gray-800 rounded-l-lg" >
                             {team.teamNumber} - {team.teamName}
                         </div>
                         <div  className="p-2 justify-items-center place-content-center text-center text-xl font-bold text-gray-800 rounded-l-lg" >
@@ -192,7 +192,7 @@ const Match = ({ eventCode, level, number, series }: { eventCode: string, level:
                     </div>
                     {match.teams.filter((team) => team.station === 'Blue1').map((team, i: number) => (
                     <div key={i+'team'} className="grid grid-rows-[30px_1fr]  m-1 rounded-lg bg-blue-300 hover:bg-blue-200">
-                        <div  className="px-2 text-left text-xl font-bold text-gray-800 rounded-l-lg" >
+                        <div  className="px-2 text-left text-sm font-bold text-gray-800 rounded-l-lg" >
                             {team.teamNumber} - {team.teamName}
                         </div>
                         <div  className="p-2 justify-items-center place-content-center text-center text-xl font-bold text-gray-800 rounded-l-lg" >
@@ -216,7 +216,7 @@ const Match = ({ eventCode, level, number, series }: { eventCode: string, level:
                     ))}
                     {match.teams.filter((team) => team.station === 'Blue2').map((team, i: number) => (
                     <div key={i+'team'} className="grid grid-rows-[30px_1fr]  m-1 rounded-lg bg-blue-300 hover:bg-blue-200">
-                        <div  className="px-2 text-left text-xl font-bold text-gray-800 rounded-l-lg" >
+                        <div  className="px-2 text-left text-sm font-bold text-gray-800 rounded-l-lg" >
                             {team.teamNumber} - {team.teamName}
                         </div>
                         <div  className="p-2 justify-items-center place-content-center text-center text-xl font-bold text-gray-800 rounded-l-lg" >

@@ -99,7 +99,7 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
 
 
     useEffect(() => {
-        fetch('/api/scout/matches/' + eventCode + '/matchdata', {cache: 'force-cache', next: { revalidate: 15 }})
+        fetch('/api/cache/' + eventCode + '/matchdata')
         .then(res => res.json())
         .then(data => {
             data.sort((a: IMatchScore, b: IMatchScore) => a.matchNumber - b.matchNumber).sort((a: IMatchScore, b: IMatchScore) => b.matchLevel.localeCompare(a.matchLevel));
@@ -109,7 +109,7 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
     }, []);
 
     useEffect(() => {
-        fetch('/api/scout/matches/' + eventCode)
+        fetch('/api/cache/' + eventCode + '/matches')
         .then(res => res.json())
         .then(data => {
             data.sort((a: IScheduleMatch, b: IScheduleMatch) => a.matchNumber - b.matchNumber).sort((a: IScheduleMatch, b: IScheduleMatch) => b.matchLevel.localeCompare(a.matchLevel));
@@ -241,22 +241,22 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
             <div key={i} className="grid grid-cols-[80px_60px_90px_60px_80px] grid-rows-[20px_30px_30px]  p-1 m-1 rounded-lg bg-slate-600 hover:bg-slate-400">
                 <div className="col-start-1 row-start-1 col-span-5 font-bold text-left text-sm text-white pl-2">{match.description}</div>
                 
-                <div className="col-start-2 row-start-2 font-bold text-center text-lg  justify-center place-items-center  bg-red-200">
+                <div className="col-start-2 row-start-2 font-bold text-center text-sm  justify-center place-items-center  bg-red-200">
                         {match.teams.filter((team) => team.station === 'Red1').map((team, i: number) => (
                             <div key={i+'team'} className={showMatches === team.teamNumber ? 'text-red-800 underline m-auto' : 'm-auto'}>{team.teamNumber}</div>
                         ))}
                     </div>
-                    <div className="col-start-2 row-start-3 font-bold text-center text-lg  justify-center place-items-center  bg-red-200">
+                    <div className="col-start-2 row-start-3 font-bold text-center text-sm  justify-center place-items-center  bg-red-200">
                         {match.teams.filter((team) => team.station === 'Red2').map((team, i: number) => (
                             <div key={i+'team'} className={showMatches === team.teamNumber ? 'text-red-800 underline m-auto' : 'm-auto'}>{team.teamNumber}</div>
                         ))}
                     </div>
-                    <div className="col-start-4 row-start-2 font-bold text-center text-lg  justify-center place-items-center  bg-blue-200">
+                    <div className="col-start-4 row-start-2 font-bold text-center text-sm  justify-center place-items-center  bg-blue-200">
                         {match.teams.filter((team) => team.station === 'Blue1').map((team, i: number) => (
                             <div key={i+'team'} className={showMatches === team.teamNumber ? 'text-blue-800 underline m-auto' : 'm-auto'}>{team.teamNumber}</div>
                         ))}
                     </div>
-                    <div className="col-start-4 row-start-3 font-bold text-center text-lg  justify-center place-items-center  bg-blue-200">
+                    <div className="col-start-4 row-start-3 font-bold text-center text-sm  justify-center place-items-center  bg-blue-200">
                         {match.teams.filter((team) => team.station === 'Blue2').map((team, i: number) => (
                             <div key={i+'team'} className={showMatches === team.teamNumber ? 'text-blue-800 underline m-auto' : 'm-auto'}>{team.teamNumber}</div>
                         ))}
@@ -292,22 +292,22 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
             <div key={i} className="grid grid-cols-[80px_60px_90px_60px_80px] grid-rows-[20px_30px_30px]  p-1 m-1 rounded-lg bg-slate-600 hover:bg-slate-400">
                 <div className="col-start-1 row-start-1 col-span-5 font-bold text-left text-sm text-white pl-2">{match.description}</div>
                 
-                <div className="col-start-2 row-start-2 font-bold text-center text-lg  justify-center place-items-center  bg-red-200">
+                <div className="col-start-2 row-start-2 font-bold text-center text-sm  justify-center place-items-center  bg-red-200">
                         {match.teams.filter((team) => team.station === 'Red1').map((team, i: number) => (
                             <div key={i+'team'} className={showMatches === team.teamNumber ? 'text-red-800 underline m-auto' : 'm-auto'}>{team.teamNumber}</div>
                         ))}
                     </div>
-                    <div className="col-start-2 row-start-3 font-bold text-center text-lg  justify-center place-items-center  bg-red-200">
+                    <div className="col-start-2 row-start-3 font-bold text-center text-sm  justify-center place-items-center  bg-red-200">
                         {match.teams.filter((team) => team.station === 'Red2').map((team, i: number) => (
                             <div key={i+'team'} className={showMatches === team.teamNumber ? 'text-red-800 underline m-auto' : 'm-auto'}>{team.teamNumber}</div>
                         ))}
                     </div>
-                    <div className="col-start-4 row-start-2 font-bold text-center text-lg  justify-center place-items-center  bg-blue-200">
+                    <div className="col-start-4 row-start-2 font-bold text-center text-sm  justify-center place-items-center  bg-blue-200">
                         {match.teams.filter((team) => team.station === 'Blue1').map((team, i: number) => (
                             <div key={i+'team'} className={showMatches === team.teamNumber ? 'text-blue-800 underline m-auto' : 'm-auto'}>{team.teamNumber}</div>
                         ))}
                     </div>
-                    <div className="col-start-4 row-start-3 font-bold text-center text-lg  justify-center place-items-center  bg-blue-200">
+                    <div className="col-start-4 row-start-3 font-bold text-center text-sm  justify-center place-items-center  bg-blue-200">
                         {match.teams.filter((team) => team.station === 'Blue2').map((team, i: number) => (
                             <div key={i+'team'} className={showMatches === team.teamNumber ? 'text-blue-800 underline m-auto' : 'm-auto'}>{team.teamNumber}</div>
                         ))}
@@ -344,22 +344,22 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
                 <div key={i} className="grid grid-cols-[80px_60px_90px_60px_80px] grid-rows-[20px_30px_30px]  p-1 m-1 rounded-lg bg-slate-600 hover:bg-slate-400">
                     <div className="col-start-1 row-start-1 col-span-5 font-bold text-left text-sm text-white pl-2">{match.description}</div>
                     
-                    <div className="col-start-2 row-start-2 font-bold text-center text-lg  justify-center place-items-center  bg-red-200">
+                    <div className="col-start-2 row-start-2 font-bold text-center text-sm  justify-center place-items-center  bg-red-200">
                         {match.teams.filter((team) => team.station === 'Red1').map((team, i: number) => (
                             <div key={i+'team'} className={showMatches === team.teamNumber ? 'text-red-800 underline m-auto' : 'm-auto'}>{team.teamNumber}</div>
                         ))}
                     </div>
-                    <div className="col-start-2 row-start-3 font-bold text-center text-lg  justify-center place-items-center  bg-red-200">
+                    <div className="col-start-2 row-start-3 font-bold text-center text-sm  justify-center place-items-center  bg-red-200">
                         {match.teams.filter((team) => team.station === 'Red2').map((team, i: number) => (
                             <div key={i+'team'} className={showMatches === team.teamNumber ? 'text-red-800 underline m-auto' : 'm-auto'}>{team.teamNumber}</div>
                         ))}
                     </div>
-                    <div className="col-start-4 row-start-2 font-bold text-center text-lg  justify-center place-items-center  bg-blue-200">
+                    <div className="col-start-4 row-start-2 font-bold text-center text-sm  justify-center place-items-center  bg-blue-200">
                         {match.teams.filter((team) => team.station === 'Blue1').map((team, i: number) => (
                             <div key={i+'team'} className={showMatches === team.teamNumber ? 'text-blue-800 underline m-auto' : 'm-auto'}>{team.teamNumber}</div>
                         ))}
                     </div>
-                    <div className="col-start-4 row-start-3 font-bold text-center text-lg  justify-center place-items-center  bg-blue-200">
+                    <div className="col-start-4 row-start-3 font-bold text-center text-sm  justify-center place-items-center  bg-blue-200">
                         {match.teams.filter((team) => team.station === 'Blue2').map((team, i: number) => (
                             <div key={i+'team'} className={showMatches === team.teamNumber ? 'text-blue-800 underline m-auto' : 'm-auto'}>{team.teamNumber}</div>
                         ))}
@@ -508,22 +508,22 @@ const Schedule = ({ eventCode }: { eventCode: string}) => {
                 <div key={i} className="grid grid-cols-[80px_60px_90px_60px_80px] grid-rows-[20px_30px_30px] p-1 m-1 rounded-lg bg-slate-600 hover:bg-slate-400">
                     <div className="col-start-1 row-start-1 col-span-5 font-bold text-left text-sm text-white pl-2">{match.description}</div>
                     
-                    <div className="col-start-2 row-start-2 font-bold text-center text-lg  justify-center place-items-center  bg-red-200">
+                    <div className="col-start-2 row-start-2 font-bold text-center text-sm  justify-center place-items-center  bg-red-200">
                         {match.teams.filter((team) => team.station === 'Red1').map((team, i: number) => (
                             <div key={i+'team'} className={showMatches === team.teamNumber ? 'text-red-800 underline m-auto' : 'm-auto'}>{team.teamNumber}</div>
                         ))}
                     </div>
-                    <div className="col-start-2 row-start-3 font-bold text-center text-lg  justify-center place-items-center  bg-red-200">
+                    <div className="col-start-2 row-start-3 font-bold text-center text-sm  justify-center place-items-center  bg-red-200">
                         {match.teams.filter((team) => team.station === 'Red2').map((team, i: number) => (
                             <div key={i+'team'} className={showMatches === team.teamNumber ? 'text-red-800 underline m-auto' : 'm-auto'}>{team.teamNumber}</div>
                         ))}
                     </div>
-                    <div className="col-start-4 row-start-2 font-bold text-center text-lg  justify-center place-items-center  bg-blue-200">
+                    <div className="col-start-4 row-start-2 font-bold text-center text-sm  justify-center place-items-center  bg-blue-200">
                         {match.teams.filter((team) => team.station === 'Blue1').map((team, i: number) => (
                             <div key={i+'team'} className={showMatches === team.teamNumber ? 'text-blue-800 underline m-auto' : 'm-auto'}>{team.teamNumber}</div>
                         ))}
                     </div>
-                    <div className="col-start-4 row-start-3 font-bold text-center text-lg  justify-center place-items-center  bg-blue-200">
+                    <div className="col-start-4 row-start-3 font-bold text-center text-sm  justify-center place-items-center  bg-blue-200">
                         {match.teams.filter((team) => team.station === 'Blue2').map((team, i: number) => (
                             <div key={i+'team'} className={showMatches === team.teamNumber ? 'text-blue-800 underline m-auto' : 'm-auto'}>{team.teamNumber}</div>
                         ))}
