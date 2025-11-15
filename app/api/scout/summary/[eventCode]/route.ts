@@ -60,10 +60,10 @@ export async function GET( request: Request, { params }: { params: Promise<{ eve
 
     const performanceSummary: IPerformanceSummary[] = []
 
-    const res = await fetch (process.env.THIS_SERVER_URL + '/api/scout/performance/' + eventCode, {cache: 'force-cache', next: { revalidate: 120 }});
+    const res = await fetch (process.env.THIS_SERVER_URL + '/api/scout/performance/' + eventCode, {cache: 'force-cache', next: { revalidate: 15 }});
     const perfData = await res.json();
 
-    const resRankings = await fetch (process.env.THIS_SERVER_URL + '/api/scout/rankings/' + eventCode, {cache: 'force-cache', next: { revalidate: 120 }});
+    const resRankings = await fetch (process.env.THIS_SERVER_URL + '/api/scout/rankings/' + eventCode, {cache: 'force-cache', next: { revalidate: 15 }});
     const rankData = await resRankings.json();
 
     // Save Event Team Summaries

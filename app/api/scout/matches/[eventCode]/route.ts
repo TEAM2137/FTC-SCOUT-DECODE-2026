@@ -6,9 +6,13 @@ import ScheduleMatch from "@/models/ftc/ScheduleMatch"
 export async function GET( request: Request, { params }: { params: Promise<{ eventCode: string, }> } ) {
     const eventCode = (await params).eventCode
 
-    const update = await fetch(process.env.THIS_SERVER_URL + '/api/ftc-events/schedule/' + eventCode, {cache: 'force-cache', next: { revalidate: 30 }});
+    const update = await fetch(process.env.THIS_SERVER_URL + '/api/ftc-events/schedule/' + eventCode);
     const updateStatus = await update.json();
     console.log(updateStatus);
+
+    const updateP = await fetch(process.env.THIS_SERVER_URL + '/api/ftc-events/schedule/' + eventCode, {cache: 'force-cache', next: { revalidate: 30 }});
+    const updatePerf = await updateP.json();
+    console.log(updatePerf);
 
     await connectDB();
     const data = await ScheduleMatch.find({ eventCode: eventCode });

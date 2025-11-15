@@ -95,13 +95,13 @@ export async function saveEventTeamSummaries(eventCode: string, teamNumber: numb
     const TeamEventMatchesSummary: IMatchTeamSummary[] = [];
     try {
 
-    const matchesResponse = await fetch(process.env.THIS_SERVER_URL + '/api/cache/' + eventCode + '/matches/' + teamNumber, {cache: 'force-cache', next: { revalidate: 15 }});
+    const matchesResponse = await fetch(process.env.THIS_SERVER_URL + '/api/scout/events/' + eventCode + '/matches/' + teamNumber);
     if (!matchesResponse.ok) {
         return ([]);
     }
     const matches: IScheduleMatch[] = await matchesResponse.json();
 
-    const scoutMatchesResponse = await fetch(process.env.THIS_SERVER_URL + '/api/cache/' + eventCode + '/matchdata/' + teamNumber, {cache: 'force-cache', next: { revalidate: 15 }});
+    const scoutMatchesResponse = await fetch(process.env.THIS_SERVER_URL + '/api/scout/matches/' + eventCode + '/matchdata/' + teamNumber);
     if (!scoutMatchesResponse.ok) {
         return ([]);
     }
