@@ -172,7 +172,7 @@ const AllianceSelector = ({ eventCode }: { eventCode: string}) => {
             setSortedPD(performanceData.sort((a: IPerformanceSummary, b: IPerformanceSummary) => b.rMatchPoints - a.rMatchPoints))
         }
         if (sortBy === 'artifacts') {
-            setSortedPD(performanceData.sort((a: IPerformanceSummary, b: IPerformanceSummary) => b.totalArtifacts - a.totalArtifacts))
+            setSortedPD(performanceData.sort((a: IPerformanceSummary, b: IPerformanceSummary) => b.score - a.score))
         }
         if (sortBy === 'rank') {
             setSortedPD(performanceData.sort((a: IPerformanceSummary, b: IPerformanceSummary) => a.rRank - b.rRank))
@@ -278,28 +278,28 @@ const AllianceSelector = ({ eventCode }: { eventCode: string}) => {
         <CardContent>
         
                 <p>Ranked Teams: {ranked} | Scouted Teams: {scouted}</p>
-                <p>Sorted by: 
-                <button className="p-1 m-1 text-right text-xs bg-green-900 text-white rounded-sm" onClick={() => setSortBy('artifacts')}>Scouting</button>
-                <button className="p-1 m-1 text-right text-xs bg-blue-900 text-white rounded-sm" onClick={() => setSortBy('rank')}>Rank Points</button>
-                <button className="p-1 m-1 text-right text-xs bg-red-900 text-white rounded-sm" onClick={() => setSortBy('matchpoints')}>Alliance Scores</button>
+                <p>Sort by: 
+                <button className="p-3 m-1 text-right text-xs bg-green-900 text-white rounded-sm" onClick={() => setSortBy('artifacts')}>Scouting</button>
+                <button className="p-3 m-1 text-right text-xs bg-blue-900 text-white rounded-sm" onClick={() => setSortBy('rank')}>Rank</button>
+                <button className="p-3 m-1 text-right text-xs bg-red-900 text-white rounded-sm" onClick={() => setSortBy('matchpoints')}>Alliance Scores</button>
                 </p>
 
 
             {performanceData.filter((team: IPerformanceSummary) => !alliances.includes(team.teamNumber)).map((team, i: number) => (
             <button key={i} className=" bg-slate-950 rounded-full m-2" onClick={() => setAlliances((prevArray) => [...prevArray, team.teamNumber]) }>
             <div  className="grid grid-cols-[25px_60px_30px_30px_30px_30px_30px_30px_30px_30px_2px] gap-1 py-1">
-                <div className="col-start-1 w-full p-1 text-center text-sm font-bold bg-blue-950 rounded-full">{i+1}</div>
+                <div className="col-start-1 w-full p-1 text-center text-sm font-bold bg-blue-950 rounded-full">{team.rRank}</div>
                 <div className="col-start-2 text-left text-lg">
                    <span className="font-bold" >{team.teamNumber}</span>
                 </div>
-                <div className="col-start-3 text-center text-sm bg-green-950">{Math.floor((team.totalArtifacts*3)+team.scoutAutoLeave+team.scoutTeleBase)}</div>
-                <div className="col-start-4 text-center text-sm">{Math.round(team.totalArtifacts)}</div>
-                <div className="col-start-5 text-center text-sm">{Math.round(team.scoutAutoLeave)}</div>
-                <div className="col-start-6 text-center text-sm">{Math.round(team.scoutTeleBase)}</div>
-                <div className="col-start-7 text-center text-sm bg-blue-950">{Math.round(team.rRankPoints * 10)/10}</div>
-                <div className="col-start-8 text-center text-sm bg-red-950">{Math.round(team.rMatchPoints)}</div>
-                <div className="col-start-9 text-center text-sm">{Math.round(team.rAutoPoints)}</div>
-                <div className="col-start-10 text-center text-sm">{Math.round(team.rBasePoints)}</div>
+                <div className="col-start-3 py-1 text-center text-xs bg-green-950">{Math.floor(team.score)}</div>
+                <div className="col-start-4 py-1 text-center text-xs">{Math.round(team.totalArtifacts)}</div>
+                <div className="col-start-5 py-1 text-center text-xs">{Math.round(team.scoutAutoLeave)}</div>
+                <div className="col-start-6 py-1 text-center text-xs">{Math.round(team.scoutTeleBase)}</div>
+                <div className="col-start-7 py-1 text-center text-xs bg-blue-950">{Math.round(team.rRankPoints * 10)/10}</div>
+                <div className="col-start-8 py-1 text-center text-xs bg-red-950">{Math.round(team.rMatchPoints)}</div>
+                <div className="col-start-9 py-1 text-center text-xs">{Math.round(team.rAutoPoints)}</div>
+                <div className="col-start-10 py-1 text-center text-xs">{Math.round(team.rBasePoints)}</div>
             </div>
             </button>
             ))}
@@ -308,34 +308,31 @@ const AllianceSelector = ({ eventCode }: { eventCode: string}) => {
         </CardContent>
         <CardFooter className="flex-row gap-2 text-sm place-items-start">
         <div className="w-[375px] flex flex-row gap-1 text-xs justify-center">
-        <div className="flex gap-2  font-medium text-xs  w-1/3">
-        <div className="flex flex-col">
-                <div className="p-1  text-right text-sm bg-green-950">Average Scouted Score</div>
-                <div className="p-1  text-right text-sm font-light">Average Artifacts</div>
-                <div className="p-1  text-right text-sm font-light">Average Auto Score</div>
-                <div className="p-1  text-right text-sm font-light">Average Base Score</div>
-        </div>
+        <div className="flex flex-col w-1/3">
+                <div className="p-1  text-right text-sm">SCOUTED DATA</div>
+                <div className="p-1  text-right text-sm bg-green-950">Avg Score</div>
+                <div className="p-1  text-right text-sm font-light">Avg Artifacts</div>
+                <div className="p-1  text-right text-sm font-light">Avg Auto Score</div>
+                <div className="p-1  text-right text-sm font-light">Avg Base Score</div>
         </div>
 
-
-        <div className="flex gap-2  font-medium text-xs  w-fill">
-        <div className="flex flex-col">
-                <div className="p-1 text-center text-sm bg-blue-950">Ranking Points<br/>&nbsp;</div>
+        <div className="flex flex-col w-1/3">
+                <div className="p-1 text-center text-sm">RANKING</div>
+                <div className="p-1 text-center text-sm bg-blue-950">Avg RPs</div>
                 <div className="p-1  text-right text-sm font-light">&nbsp;</div>
                 <div className="p-1  text-right text-sm font-light">&nbsp;</div>
                 <div className="p-1  text-right text-sm font-light">&nbsp;</div>
 
         </div>
-        </div>
 
-        <div className="flex gap-2  font-medium text-xs  w-1/3">
-        <div className="flex flex-col">
-                <div className="p-1  text-left text-sm bg-red-950">Alliance Match Points</div>
-                <div className="p-1  text-left text-sm font-light">Alliance Auto</div>
-                <div className="p-1  text-left text-sm font-light">Alliance Base</div>
+        <div className="flex flex-col w-1/3">
+                <div className="p-1  text-left text-sm">ALLIANCE DATA</div>
+                <div className="p-1  text-left text-sm bg-red-950">Avg Match Points</div>
+                <div className="p-1  text-left text-sm font-light">Avg Auto</div>
+                <div className="p-1  text-left text-sm font-light">Avg Base</div>
                 <div className="p-1  text-left text-sm font-light">&nbsp;</div>
         </div>
-        </div>
+
         </div>
         </CardFooter>
         </Card>
