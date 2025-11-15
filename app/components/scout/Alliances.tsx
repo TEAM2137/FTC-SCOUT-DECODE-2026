@@ -28,7 +28,7 @@ const Alliances = ({ eventCode }: { eventCode: string}) => {
     const [alliancesLoaded, setAlliancesLoaded] = useState<boolean>(false);
 
     useEffect(() => {
-        fetch('/api/scout/alliances/' + eventCode, {cache: 'force-cache', next: { revalidate: 15 }} )
+        fetch('/api/scout/alliances/' + eventCode)
         .then(res => res.json())
         .then(data => {
             data.sort((a: IAlliance, b: IAlliance) => a.number - b.number)
